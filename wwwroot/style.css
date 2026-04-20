@@ -1,0 +1,38 @@
+﻿body {
+    background: linear-gradient(135deg, #0f172a, #1e2937);
+    color: #e2e8f0;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.navbar {
+    background: rgba(15, 23, 42, 0.95) !important;
+}
+
+.card {
+    background: #1e2937;
+    border: none;
+    transition: all 0.3s;
+}
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+.table {
+    background: #1e2937;
+}
+
+.btn-trade {
+    font-weight: bold;
+}
+
+.balance {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #22c55e;
+}
+
+header {
+    background: #1e40af;
+}
