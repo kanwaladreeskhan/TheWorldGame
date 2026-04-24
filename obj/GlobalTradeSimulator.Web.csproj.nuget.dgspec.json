@@ -1,33 +1,36 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\FC Technologies\\GlobalTradeSimulator\\GlobalTradeSimulator.Web\\GlobalTradeSimulator.Web\\GlobalTradeSimulator.Web.csproj": {}
+    "C:\\Users\\aisha_ppxjc2l\\OneDrive\\Documents\\My Web Sites\\TheWorldGame\\GlobalTradeSimulator.Web.csproj": {}
   },
   "projects": {
-    "C:\\Users\\FC Technologies\\GlobalTradeSimulator\\GlobalTradeSimulator.Web\\GlobalTradeSimulator.Web\\GlobalTradeSimulator.Web.csproj": {
+    "C:\\Users\\aisha_ppxjc2l\\OneDrive\\Documents\\My Web Sites\\TheWorldGame\\GlobalTradeSimulator.Web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\FC Technologies\\GlobalTradeSimulator\\GlobalTradeSimulator.Web\\GlobalTradeSimulator.Web\\GlobalTradeSimulator.Web.csproj",
+        "projectUniqueName": "C:\\Users\\aisha_ppxjc2l\\OneDrive\\Documents\\My Web Sites\\TheWorldGame\\GlobalTradeSimulator.Web.csproj",
         "projectName": "GlobalTradeSimulator.Web",
-        "projectPath": "C:\\Users\\FC Technologies\\GlobalTradeSimulator\\GlobalTradeSimulator.Web\\GlobalTradeSimulator.Web\\GlobalTradeSimulator.Web.csproj",
-        "packagesPath": "C:\\Users\\FC Technologies\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\FC Technologies\\GlobalTradeSimulator\\GlobalTradeSimulator.Web\\GlobalTradeSimulator.Web\\obj\\",
+        "projectPath": "C:\\Users\\aisha_ppxjc2l\\OneDrive\\Documents\\My Web Sites\\TheWorldGame\\GlobalTradeSimulator.Web.csproj",
+        "packagesPath": "C:\\Users\\aisha_ppxjc2l\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\aisha_ppxjc2l\\OneDrive\\Documents\\My Web Sites\\TheWorldGame\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\FC Technologies\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\aisha_ppxjc2l\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net6.0"
+          "net8.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net6.0": {
-            "targetAlias": "net6.0",
+          "net8.0": {
+            "targetAlias": "net8.0",
             "projectReferences": {}
           }
         },
@@ -40,11 +43,12 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
-        "net6.0": {
-          "targetAlias": "net6.0",
+        "net8.0": {
+          "targetAlias": "net8.0",
           "dependencies": {
             "Swashbuckle.AspNetCore": {
               "target": "Package",
@@ -74,7 +78,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.414\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.311/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

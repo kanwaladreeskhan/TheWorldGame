@@ -8,7 +8,7 @@ namespace GlobalTradeSimulator.DataAccess
     public class MarketRepository
     {
         // Connection String (Aapki Machine ke mutabiq)
-        private readonly string _connString = "Server=DESKTOP-VEIPHS8\\SQLEXPRESS;Database=gameDB;Trusted_Connection=True;TrustServerCertificate=True;";
+        private readonly string _connString = "Server=.\\SQLEXPRESS;Database=gameDB;Trusted_Connection=True;TrustServerCertificate=True;";
 
         /// <summary>
         /// Database se saare resources, unki prices, supply aur demand fetch karta hai.
@@ -17,7 +17,7 @@ namespace GlobalTradeSimulator.DataAccess
         {
             var list = new List<MarketResource>();
             // CONNECTION STRING CHECK: Kya server name bilkul yahi hai?
-            string _connString = "Server=DESKTOP-VEIPHS8\\SQLEXPRESS;Database=gameDB;Trusted_Connection=True;TrustServerCertificate=True;";
+            string _connString = "Server=.\\SQLEXPRESS;Database=gameDB;Trusted_Connection=True;TrustServerCertificate=True;";
 
             try
             {

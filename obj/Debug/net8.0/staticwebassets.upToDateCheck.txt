@@ -1,0 +1,6 @@
+wwwroot\app.js
+wwwroot\index.html
+wwwroot\inventory.html
+wwwroot\leaderboard.html
+wwwroot\market.html
+wwwroot\style.css
