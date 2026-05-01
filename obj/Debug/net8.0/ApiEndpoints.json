@@ -138,5 +138,21 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GlobalTradeSimulator.Web.Controllers.TradeController",
+    "Method": "GetHistory",
+    "RelativePath": "api/trade/history/{playerId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "playerId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

@@ -598,23 +598,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\aisha_ppxjc2l\\.nuget\\packages\\": {},
+    "C:\\Users\\IFFAT BATOOL\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\aisha_ppxjc2l\\OneDrive\\Documents\\My Web Sites\\TheWorldGame\\GlobalTradeSimulator.Web.csproj",
+      "projectUniqueName": "C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\GlobalTradeSimulator.Web.csproj",
       "projectName": "GlobalTradeSimulator.Web",
-      "projectPath": "C:\\Users\\aisha_ppxjc2l\\OneDrive\\Documents\\My Web Sites\\TheWorldGame\\GlobalTradeSimulator.Web.csproj",
-      "packagesPath": "C:\\Users\\aisha_ppxjc2l\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\aisha_ppxjc2l\\OneDrive\\Documents\\My Web Sites\\TheWorldGame\\obj\\",
+      "projectPath": "C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\GlobalTradeSimulator.Web.csproj",
+      "packagesPath": "C:\\Users\\IFFAT BATOOL\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\aisha_ppxjc2l\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\IFFAT BATOOL\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -641,7 +641,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.300"
+      "SdkAnalysisLevel": "10.0.200"
     },
     "frameworks": {
       "net8.0": {
@@ -675,7 +675,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.311/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.202/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

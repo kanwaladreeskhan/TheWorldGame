@@ -1,6 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Controllers",
+    "\\Services"
   ],
   "SelectedNode": "\\appsettings.json",
   "PreviewInSolutionExplorer": false

@@ -1,3 +1,5 @@
+create database db
+
  
  -- Countries
 CREATE TABLE Countries (
@@ -244,35 +246,4 @@ END;
  CREATE INDEX idx_player_balance ON Players(Balance);
 CREATE INDEX idx_trade_player ON Trades(PlayerId);
 CREATE INDEX idx_resource ON PlayerResources(ResourceId);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
