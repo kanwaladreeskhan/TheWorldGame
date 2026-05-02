@@ -51,6 +51,15 @@ namespace GlobalTradeSimulator.DataAccess
             }
             return list;
         }
+        public void UpdateMarketPrices()
+{
+    using var connection = new SqlConnection(_connString);
+    connection.Open();
+    // Har resource ki price ko -5% se +10% ke darmiyan change karne ka logic
+    string sql = "UPDATE Resources SET CurrentPrice = CurrentPrice * (1 + (ABS(CHECKSUM(NewId())) % 15 - 5) / 100.0)";
+    using var cmd = new SqlCommand(sql, connection);
+    cmd.ExecuteNonQuery();
+}
      //prices ko randomly change karega.   
 public bool UpdateMarketTurn()
 {

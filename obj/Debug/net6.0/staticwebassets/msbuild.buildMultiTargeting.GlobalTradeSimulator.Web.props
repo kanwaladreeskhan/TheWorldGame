@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\GlobalTradeSimulator.Web.props" />
-</Project>

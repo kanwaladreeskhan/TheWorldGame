@@ -7,12 +7,8 @@ namespace GlobalTradeSimulator.DataAccess
 {
     public class PlayerRepository
     {
-<<<<<<< HEAD
-        // Connection String ek hi jagah rakhein
+        // Connection String (Updated to your SQL Express instance)
         private readonly string _connString = "Server=.\\LAB;Database=gameDB;Trusted_Connection=True;TrustServerCertificate=True;";
-=======
-        private readonly string _connString = "Server=DESKTOP-R9F65GH\\SQLEXPRESS03;Database=gameDB;Trusted_Connection=True;Encrypt=False;TrustServerCertificate=True;";
->>>>>>> 4e2f0faf0438fb51dc4b7dc630b478a10e1f9d7b
 
         // 1. Get Player by Name
         public Player? GetPlayer(string name)
@@ -92,42 +88,27 @@ namespace GlobalTradeSimulator.DataAccess
             return inv;
         }
 
-<<<<<<< HEAD
-        // 5. Get Leaderboard (Uses SQL VIEW 'Leaderboard')
-// 5. Get Leaderboard (Ab updated logic ke sath)
-public List<object> GetLeaderboard()
-{
-    var list = new List<object>();
-    using var connection = new SqlConnection(_connString);
-    connection.Open();
-    // Hum check kar rahe hain ke Name 'User' hai ya nahi (IsPlayer identify karne ke liye)
-    string sql = "SELECT Name, TotalWealth FROM Leaderboard ORDER BY TotalWealth DESC";
-    var cmd = new SqlCommand(sql, connection);
-    using var reader = cmd.ExecuteReader();
-    while (reader.Read())
-    {
-        string name = reader.GetString(0);
-        list.Add(new { 
-            Name = name, 
-            TotalWealth = Convert.ToDouble(reader["TotalWealth"]),
-            IsPlayer = (name.ToLower() == "aamnah") // Apne login name ke hisab se change karein
-        });
-    }
-    return list;
-}
-=======
-        // 5. Leaderboard
+        // 5. Get Leaderboard (With Player Highlight Logic)
         public List<object> GetLeaderboard()
         {
             var list = new List<object>();
             using var connection = new SqlConnection(_connString);
             connection.Open();
-            var cmd = new SqlCommand("SELECT Name, TotalWealth FROM Leaderboard ORDER BY TotalWealth DESC", connection);
+            
+            // Uses SQL VIEW 'Leaderboard'
+            string sql = "SELECT Name, TotalWealth FROM Leaderboard ORDER BY TotalWealth DESC";
+            var cmd = new SqlCommand(sql, connection);
             using var reader = cmd.ExecuteReader();
             while (reader.Read())
-                list.Add(new { Name = reader.GetString(0), TotalWealth = Convert.ToDouble(reader["TotalWealth"]) });
+            {
+                string name = reader.GetString(0);
+                list.Add(new { 
+                    Name = name, 
+                    TotalWealth = Convert.ToDouble(reader["TotalWealth"]),
+                    IsPlayer = (name.ToLower() == "aamnah") // Highlights your name in the list
+                });
+            }
             return list;
         }
->>>>>>> 4e2f0faf0438fb51dc4b7dc630b478a10e1f9d7b
     }
 }
