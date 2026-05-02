@@ -60,40 +60,32 @@
 
     <script src="app.js"></script>
     <script>
-        async function loadInventory() {
-    // Pehle koshish karein login user mil jaye, warna '1' use karein
-    const player = getCurrentPlayer(); 
-    const id = (player && (player.PlayerId || player.Id)) ? (player.PlayerId || player.Id) : 1; 
+     async function loadInventory() {
+    console.log("Loading inventory..."); // Check if function starts
+    const id = 1; // Testing ke liye direct 1 rakhein
 
     try {
         const res = await fetch(`/api/player/${id}/inventory`);
+        console.log("Response status:", res.status); // Check if API is found
+        
         const items = await res.json();
-        const tbody = document.getElementById('inventoryBody');
-        const noItems = document.getElementById('noItems');
+        console.log("Data received:", items); // Check if data is coming from SQL
 
-        if (!items || items.length === 0) {
-            tbody.innerHTML = "";
-            noItems.classList.remove('d-none');
+        const tbody = document.getElementById('inventoryBody');
+        if (items.length === 0) {
+            tbody.innerHTML = "<tr><td colspan='3'>No data found in SQL</td></tr>";
             return;
         }
 
-        noItems.classList.add('d-none');
         tbody.innerHTML = items.map(item => `
             <tr>
-                <td class="align-middle fw-bold py-3">${item.resourceName || item.ResourceName}</td>
-                <td class="text-center align-middle">
-                    <span class="resource-badge text-info">${(item.quantity || item.Quantity).toLocaleString()} units</span>
-                </td>
-                <td class="text-center align-middle">
-                    <button class="btn btn-sm btn-warning fw-bold px-3" 
-                        onclick="location.href='market.html?sell=${item.resourceId || item.ResourceId}'">
-                        Sell in Market
-                    </button>
-                </td>
+              <td>${item.resourceName || item.ResourceName}</td>
+              <td>${item.quantity || item.Quantity}</td>
+              <td><button class="btn btn-sm btn-warning">Sell</button></td>
             </tr>
         `).join('');
-    } catch (err) { 
-        console.error("Inventory Load Error:", err); 
+    } catch (err) {
+        console.error("Fetch error:", err);
     }
 }
     </script>
