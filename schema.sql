@@ -15,5 +15,10 @@ CREATE TABLE WarEvents (
     PriceMultiplier FLOAT,
     SupplyDrop INT,
     DemandBoost INT,
-    IsActive BIT
+    IsActive BIT DEFAULT 0
 );
+
+INSERT INTO WarEvents (EventId, EventName, Description, AffectedResourceId, PriceMultiplier, SupplyDrop, DemandBoost, IsActive)
+VALUES 
+(1, 'Oil Crisis', 'Supply lines cut due to naval blockade!', 1, 1.5, 50, 20, 0),
+(2, 'Cyber Warfare', 'Tech resources are being diverted to defense.', 2, 1.3, 30, 10, 0);

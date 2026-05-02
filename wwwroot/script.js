@@ -17,6 +17,25 @@ function updateUI() {
         el.textContent = Number(val).toLocaleString();
     });
 }
+async function updateGameStatus() {
+    try {
+        const res = await fetch('/api/game/state');
+        const state = await res.json();
+        
+        const badge = document.getElementById('gameModeBadge');
+        if (state.mode === "War") {
+            badge.innerText = "WAR MODE ACTIVE";
+            badge.className = "badge bg-danger animate-pulse"; // War mein red pulse effect
+            document.body.classList.add('war-theme'); // Optional: Puri screen thori red tint kar dein
+        } else {
+            badge.innerText = "Normal";
+            badge.className = "badge bg-success";
+            document.body.classList.remove('war-theme');
+        }
+    } catch (err) {
+        console.error("Status check failed", err);
+    }
+}
 
 // 2. Fetch Player Data from Server (Silent Update)
 async function refreshPlayerData() {
