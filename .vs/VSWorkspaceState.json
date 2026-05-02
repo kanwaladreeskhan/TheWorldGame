@@ -2,8 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\Controllers",
-    "\\Services"
+    "\\DataAccess",
+    "\\Services",
+    "\\wwwroot"
   ],
-  "SelectedNode": "\\appsettings.json",
+  "SelectedNode": "\\Services\\MarketService.cs",
   "PreviewInSolutionExplorer": false
 }

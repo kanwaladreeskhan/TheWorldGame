@@ -3,8 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\Services\\MarketService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Services\\MarketService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\GlobalTradeSimulator.Web.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:GlobalTradeSimulator.Web.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\wwwroot\\market.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:wwwroot\\market.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\DataAccess\\PlayerRepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:DataAccess\\PlayerRepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\DataAccess\\MarketRepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:DataAccess\\MarketRepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\GlobalTradeSimulator.Web.csproj.user||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
@@ -15,20 +35,12 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\DataAccess\\MarketRepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:DataAccess\\MarketRepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\DataAccess\\GameStateRepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:DataAccess\\GameStateRepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\Services\\GameEngine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Services\\GameEngine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\Services\\MarketService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Services\\MarketService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\TradeController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -54,7 +66,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -62,7 +74,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
+              "Title": "index.html",
+              "DocumentMoniker": "C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\wwwroot\\index.html",
+              "RelativeDocumentMoniker": "wwwroot\\index.html",
+              "ToolTip": "C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\wwwroot\\index.html",
+              "RelativeToolTip": "wwwroot\\index.html",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2026-05-02T08:11:24.861Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "PlayerRepository.cs",
+              "DocumentMoniker": "C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\DataAccess\\PlayerRepository.cs",
+              "RelativeDocumentMoniker": "DataAccess\\PlayerRepository.cs",
+              "ToolTip": "C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\DataAccess\\PlayerRepository.cs",
+              "RelativeToolTip": "DataAccess\\PlayerRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-02T08:10:38.042Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "GlobalTradeSimulator.Web.csproj",
               "DocumentMoniker": "C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\GlobalTradeSimulator.Web.csproj",
               "RelativeDocumentMoniker": "GlobalTradeSimulator.Web.csproj",
@@ -75,7 +113,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 6,
               "Title": "GlobalTradeSimulator.Web.csproj.user",
               "DocumentMoniker": "C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\GlobalTradeSimulator.Web.csproj.user",
               "RelativeDocumentMoniker": "GlobalTradeSimulator.Web.csproj.user",
@@ -88,20 +126,46 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "MarketRepository.cs",
               "DocumentMoniker": "C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\DataAccess\\MarketRepository.cs",
               "RelativeDocumentMoniker": "DataAccess\\MarketRepository.cs",
               "ToolTip": "C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\DataAccess\\MarketRepository.cs",
               "RelativeToolTip": "DataAccess\\MarketRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAVAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADkAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-01T09:48:04.62Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
+              "Title": "MarketService.cs",
+              "DocumentMoniker": "C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\Services\\MarketService.cs",
+              "RelativeDocumentMoniker": "Services\\MarketService.cs",
+              "ToolTip": "C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\Services\\MarketService.cs",
+              "RelativeToolTip": "Services\\MarketService.cs",
+              "ViewState": "AgIAAMgAAAAAAAAAAAAowNoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-01T08:56:53.24Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "market.html",
+              "DocumentMoniker": "C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\wwwroot\\market.html",
+              "RelativeDocumentMoniker": "wwwroot\\market.html",
+              "ToolTip": "C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\wwwroot\\market.html",
+              "RelativeToolTip": "wwwroot\\market.html",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAJMAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2026-05-02T08:11:31.722Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "GameStateRepository.cs",
               "DocumentMoniker": "C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\DataAccess\\GameStateRepository.cs",
               "RelativeDocumentMoniker": "DataAccess\\GameStateRepository.cs",
@@ -114,7 +178,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 9,
               "Title": "GameEngine.cs",
               "DocumentMoniker": "C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\Services\\GameEngine.cs",
               "RelativeDocumentMoniker": "Services\\GameEngine.cs",
@@ -127,19 +191,18 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 10,
               "Title": "TradeController.cs",
               "DocumentMoniker": "C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\TradeController.cs",
               "RelativeDocumentMoniker": "TradeController.cs",
               "ToolTip": "C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\TradeController.cs",
               "RelativeToolTip": "TradeController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-01T09:12:17.927Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 12,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -147,11 +210,12 @@
               "RelativeToolTip": "Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-01T09:06:01.632Z"
+              "WhenOpened": "2026-05-01T09:06:01.632Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 7,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
@@ -164,7 +228,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 11,
               "Title": "TradeController.cs",
               "DocumentMoniker": "C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\Controllers\\TradeController.cs",
               "RelativeDocumentMoniker": "Controllers\\TradeController.cs",
@@ -172,24 +236,12 @@
               "RelativeToolTip": "Controllers\\TradeController.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAYwAwAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-01T08:57:14.945Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "MarketService.cs",
-              "DocumentMoniker": "C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\Services\\MarketService.cs",
-              "RelativeDocumentMoniker": "Services\\MarketService.cs",
-              "ToolTip": "C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\Services\\MarketService.cs",
-              "RelativeToolTip": "Services\\MarketService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAANoAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-01T08:56:53.24Z",
+              "WhenOpened": "2026-05-01T08:57:14.945Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 13,
               "Title": "TradeService.cs",
               "DocumentMoniker": "C:\\Users\\IFFAT BATOOL\\OneDrive\\Documents\\GitHub\\TheWorldGame\\Services\\TradeService.cs",
               "RelativeDocumentMoniker": "Services\\TradeService.cs",
@@ -197,7 +249,8 @@
               "RelativeToolTip": "Services\\TradeService.cs",
               "ViewState": "AgIAAA8AAAAAAAAAAAAAAMMAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-01T08:55:35.89Z"
+              "WhenOpened": "2026-05-01T08:55:35.89Z",
+              "EditorCaption": ""
             }
           ]
         }

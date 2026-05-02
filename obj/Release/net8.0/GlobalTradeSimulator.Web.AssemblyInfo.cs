@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GlobalTradeSimulator.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+021aa603230e48c148b83b10540d58a968b6831d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e9460271ae891e399ea4666e9b17442dc41c1985")]
 [assembly: System.Reflection.AssemblyProductAttribute("GlobalTradeSimulator.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GlobalTradeSimulator.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
