@@ -7,10 +7,14 @@ namespace GlobalTradeSimulator.DataAccess
 {
     public class PlayerRepository
     {
+<<<<<<< HEAD
         // Connection String ek hi jagah rakhein
         private readonly string _connString = "Server=.\\LAB;Database=gameDB;Trusted_Connection=True;TrustServerCertificate=True;";
+=======
+        private readonly string _connString = "Server=DESKTOP-R9F65GH\\SQLEXPRESS03;Database=gameDB;Trusted_Connection=True;Encrypt=False;TrustServerCertificate=True;";
+>>>>>>> 4e2f0faf0438fb51dc4b7dc630b478a10e1f9d7b
 
-        // 1. Get Player by Name (For Login)
+        // 1. Get Player by Name
         public Player? GetPlayer(string name)
         {
             try
@@ -41,7 +45,7 @@ namespace GlobalTradeSimulator.DataAccess
             return null;
         }
 
-        // 2. Get Player by ID (For Trade Logic)
+        // 2. Get Player by ID
         public Player? GetPlayerById(int id)
         {
             using var connection = new SqlConnection(_connString);
@@ -51,13 +55,11 @@ namespace GlobalTradeSimulator.DataAccess
             cmd.Parameters.AddWithValue("@id", id);
             using var reader = cmd.ExecuteReader();
             if (reader.Read())
-            {
                 return new Player { Id = reader.GetInt32(0), Name = reader.GetString(1), Balance = Convert.ToDouble(reader["Balance"]) };
-            }
             return null;
         }
 
-        // 3. Get All Players (For Country Selection)
+        // 3. Get All Players
         public List<Player> GetAllPlayers()
         {
             var list = new List<Player>();
@@ -67,16 +69,14 @@ namespace GlobalTradeSimulator.DataAccess
             using var cmd = new SqlCommand(sql, connection);
             using var reader = cmd.ExecuteReader();
             while (reader.Read())
-            {
                 list.Add(new Player { Id = reader.GetInt32(0), Name = reader.GetString(1), Balance = reader.GetDouble(2) });
-            }
             return list;
         }
 
-        // 4. Get Inventory (Joins with Resources)
+        // 4. Get Inventory
         public List<PlayerResource> GetInventory(int playerId)
         {
-            List<PlayerResource> inv = new List<PlayerResource>();
+            var inv = new List<PlayerResource>();
             using (SqlConnection connection = new SqlConnection(_connString))
             {
                 connection.Open();
@@ -85,17 +85,14 @@ namespace GlobalTradeSimulator.DataAccess
                 {
                     cmd.Parameters.AddWithValue("@pid", playerId);
                     using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
                         while (reader.Read())
-                        {
                             inv.Add(new PlayerResource { ResourceId = reader.GetInt32(0), ResourceName = reader.GetString(1), Quantity = reader.GetInt32(2) });
-                        }
-                    }
                 }
             }
             return inv;
         }
 
+<<<<<<< HEAD
         // 5. Get Leaderboard (Uses SQL VIEW 'Leaderboard')
 // 5. Get Leaderboard (Ab updated logic ke sath)
 public List<object> GetLeaderboard()
@@ -118,5 +115,19 @@ public List<object> GetLeaderboard()
     }
     return list;
 }
+=======
+        // 5. Leaderboard
+        public List<object> GetLeaderboard()
+        {
+            var list = new List<object>();
+            using var connection = new SqlConnection(_connString);
+            connection.Open();
+            var cmd = new SqlCommand("SELECT Name, TotalWealth FROM Leaderboard ORDER BY TotalWealth DESC", connection);
+            using var reader = cmd.ExecuteReader();
+            while (reader.Read())
+                list.Add(new { Name = reader.GetString(0), TotalWealth = Convert.ToDouble(reader["TotalWealth"]) });
+            return list;
+        }
+>>>>>>> 4e2f0faf0438fb51dc4b7dc630b478a10e1f9d7b
     }
 }

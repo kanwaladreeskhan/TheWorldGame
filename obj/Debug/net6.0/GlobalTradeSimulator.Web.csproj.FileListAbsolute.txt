@@ -1,0 +1,82 @@
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\bin\Debug\net6.0\appsettings.Development.json
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\bin\Debug\net6.0\appsettings.json
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\bin\Debug\net6.0\GlobalTradeSimulator.Web.staticwebassets.runtime.json
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\bin\Debug\net6.0\GlobalTradeSimulator.Web.exe
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\bin\Debug\net6.0\GlobalTradeSimulator.Web.deps.json
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\bin\Debug\net6.0\GlobalTradeSimulator.Web.runtimeconfig.json
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\bin\Debug\net6.0\GlobalTradeSimulator.Web.dll
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\bin\Debug\net6.0\GlobalTradeSimulator.Web.pdb
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\bin\Debug\net6.0\Microsoft.OpenApi.dll
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\bin\Debug\net6.0\System.Data.SqlClient.dll
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\bin\Debug\net6.0\runtimes\win-arm64\native\sni.dll
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\bin\Debug\net6.0\runtimes\win-x64\native\sni.dll
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\bin\Debug\net6.0\runtimes\win-x86\native\sni.dll
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\bin\Debug\net6.0\runtimes\unix\lib\net6.0\System.Data.SqlClient.dll
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Data.SqlClient.dll
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\obj\Debug\net6.0\GlobalTradeSimulator.Web.csproj.AssemblyReference.cache
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\obj\Debug\net6.0\GlobalTradeSimulator.Web.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\obj\Debug\net6.0\GlobalTradeSimulator.Web.AssemblyInfoInputs.cache
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\obj\Debug\net6.0\GlobalTradeSimulator.Web.AssemblyInfo.cs
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\obj\Debug\net6.0\GlobalTradeSimulator.Web.csproj.CoreCompileInputs.cache
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\obj\Debug\net6.0\GlobalTradeSimulator.Web.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\obj\Debug\net6.0\GlobalTradeSimulator.Web.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\obj\Debug\net6.0\staticwebassets.build.json
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\obj\Debug\net6.0\staticwebassets.development.json
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\obj\Debug\net6.0\staticwebassets\msbuild.GlobalTradeSimulator.Web.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\obj\Debug\net6.0\staticwebassets\msbuild.build.GlobalTradeSimulator.Web.props
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.GlobalTradeSimulator.Web.props
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.GlobalTradeSimulator.Web.props
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\obj\Debug\net6.0\staticwebassets.pack.json
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\obj\Debug\net6.0\scopedcss\bundle\GlobalTradeSimulator.Web.styles.css
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\obj\Debug\net6.0\GlobalTr.9974887A.Up2Date
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\obj\Debug\net6.0\GlobalTradeSimulator.Web.dll
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\obj\Debug\net6.0\refint\GlobalTradeSimulator.Web.dll
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\obj\Debug\net6.0\GlobalTradeSimulator.Web.pdb
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\obj\Debug\net6.0\GlobalTradeSimulator.Web.genruntimeconfig.cache
+C:\Users\FC Technologies\GlobalTradeSimulator\GlobalTradeSimulator.Web\GlobalTradeSimulator.Web\obj\Debug\net6.0\ref\GlobalTradeSimulator.Web.dll
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\obj\Debug\net6.0\GlobalTradeSimulator.Web.dll
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\obj\Debug\net6.0\refint\GlobalTradeSimulator.Web.dll
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\obj\Debug\net6.0\GlobalTradeSimulator.Web.pdb
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\bin\Debug\net6.0\appsettings.Development.json
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\bin\Debug\net6.0\appsettings.json
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\bin\Debug\net6.0\GlobalTradeSimulator.Web.staticwebassets.runtime.json
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\bin\Debug\net6.0\GlobalTradeSimulator.Web.staticwebassets.endpoints.json
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\bin\Debug\net6.0\GlobalTradeSimulator.Web.exe
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\bin\Debug\net6.0\GlobalTradeSimulator.Web.deps.json
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\bin\Debug\net6.0\GlobalTradeSimulator.Web.runtimeconfig.json
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\bin\Debug\net6.0\GlobalTradeSimulator.Web.dll
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\bin\Debug\net6.0\GlobalTradeSimulator.Web.pdb
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\bin\Debug\net6.0\Microsoft.OpenApi.dll
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\bin\Debug\net6.0\System.Data.SqlClient.dll
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\bin\Debug\net6.0\runtimes\win-arm64\native\sni.dll
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\bin\Debug\net6.0\runtimes\win-x64\native\sni.dll
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\bin\Debug\net6.0\runtimes\win-x86\native\sni.dll
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\bin\Debug\net6.0\runtimes\unix\lib\net6.0\System.Data.SqlClient.dll
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Data.SqlClient.dll
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\obj\Debug\net6.0\GlobalTradeSimulator.Web.csproj.AssemblyReference.cache
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\obj\Debug\net6.0\rpswa.dswa.cache.json
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\obj\Debug\net6.0\GlobalTradeSimulator.Web.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\obj\Debug\net6.0\GlobalTradeSimulator.Web.AssemblyInfoInputs.cache
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\obj\Debug\net6.0\GlobalTradeSimulator.Web.AssemblyInfo.cs
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\obj\Debug\net6.0\GlobalTradeSimulator.Web.csproj.CoreCompileInputs.cache
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\obj\Debug\net6.0\GlobalTradeSimulator.Web.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\obj\Debug\net6.0\GlobalTradeSimulator.Web.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\obj\Debug\net6.0\GlobalTradeSimulator.Web.sourcelink.json
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\obj\Debug\net6.0\rjimswa.dswa.cache.json
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\obj\Debug\net6.0\rjsmrazor.dswa.cache.json
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\obj\Debug\net6.0\rjsmcshtml.dswa.cache.json
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\obj\Debug\net6.0\scopedcss\bundle\GlobalTradeSimulator.Web.styles.css
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\obj\Debug\net6.0\staticwebassets.build.json
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\obj\Debug\net6.0\staticwebassets.build.json.cache
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\obj\Debug\net6.0\staticwebassets.development.json
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\obj\Debug\net6.0\staticwebassets.build.endpoints.json
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\obj\Debug\net6.0\staticwebassets.upToDateCheck.txt
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\obj\Debug\net6.0\GlobalTr.9974887A.Up2Date
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\obj\Debug\net6.0\GlobalTradeSimulator.Web.genruntimeconfig.cache
+C:\Users\aisha_ppxjc2l\OneDrive\Documents\My Web Sites\TheWorldGame\obj\Debug\net6.0\ref\GlobalTradeSimulator.Web.dll

@@ -33,18 +33,13 @@ namespace GlobalTradeSimulator.Web.Controllers
 
         // NEXT TURN logic - FIXED '_repo' to '_marketRepo'
         [HttpPost("next-turn")]
-public IActionResult NextTurn()
-{
-    // Direct initialize karein taake koi confusion na rahe
-    var repo = new MarketRepository(); 
-    var success = repo.UpdateMarketTurn(); 
-    
-    if (success) 
-    {
-        return Ok(new { message = "Market prices updated successfully!" });
-    }
-    return BadRequest(new { message = "Failed to update market prices." });
-}
+        public IActionResult NextTurn()
+        {
+            // Pehle yahan _repo likha tha, jo ghalat tha. Ab theek hai:
+            var success = _marketRepo.UpdateMarketTurn(); 
+            if (success) return Ok(new { message = "Market updated!" });
+            return BadRequest("Update failed.");
+        }
 
         // GET: api/market/{id}
         [HttpGet("{id}")]

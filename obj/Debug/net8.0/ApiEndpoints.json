@@ -1,0 +1,158 @@
+[
+  {
+    "ContainingType": "GlobalTradeSimulator.Web.Controllers.GameController",
+    "Method": "EndWar",
+    "RelativePath": "api/game/end-war",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GlobalTradeSimulator.Web.Controllers.GameController",
+    "Method": "NextTurn",
+    "RelativePath": "api/game/next-turn",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "GlobalTradeSimulator.Web.Controllers.TurnRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GlobalTradeSimulator.Web.Controllers.GameController",
+    "Method": "StartWar",
+    "RelativePath": "api/game/start-war",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GlobalTradeSimulator.Web.Controllers.GameController",
+    "Method": "GetGameState",
+    "RelativePath": "api/game/state",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GlobalTradeSimulator.Web.Controllers.MarketController",
+    "Method": "GetAllMarketData",
+    "RelativePath": "api/market",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GlobalTradeSimulator.Web.Controllers.MarketController",
+    "Method": "GetById",
+    "RelativePath": "api/market/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GlobalTradeSimulator.Web.Controllers.PlayerController",
+    "Method": "GetAllPlayers",
+    "RelativePath": "api/player",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GlobalTradeSimulator.Web.Controllers.PlayerController",
+    "Method": "GetInventory",
+    "RelativePath": "api/player/{id}/inventory",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GlobalTradeSimulator.Web.Controllers.PlayerController",
+    "Method": "GetPlayer",
+    "RelativePath": "api/player/{name}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "name",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GlobalTradeSimulator.Web.Controllers.PlayerController",
+    "Method": "GetLeaderboard",
+    "RelativePath": "api/player/leaderboard",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GlobalTradeSimulator.Web.Controllers.TradeController",
+    "Method": "ExecuteTrade",
+    "RelativePath": "api/trade",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "GlobalTradeSimulator.Web.Controllers.TradeRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GlobalTradeSimulator.Web.Controllers.TradeController",
+    "Method": "GetHistory",
+    "RelativePath": "api/trade/history/{playerId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "playerId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
