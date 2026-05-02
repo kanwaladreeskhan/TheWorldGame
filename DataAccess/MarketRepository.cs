@@ -51,13 +51,43 @@ namespace GlobalTradeSimulator.DataAccess
             }
             return list;
         }
+     //prices ko randomly change karega.   
+public bool UpdateMarketTurn()
+{
+    // Connection string lazmi check karein
+    string connStr = "Server=.\\LAB;Database=gameDB;Trusted_Connection=True;TrustServerCertificate=True;";
+    
+    try
+    {
+        using (var connection = new Microsoft.Data.SqlClient.SqlConnection(connStr))
+        {
+            connection.Open();
+            // Price fluctuation logic
+            string sql = @"UPDATE MarketPrices 
+                           SET CurrentPrice = CurrentPrice * (1 + (ABS(CHECKSUM(NEWID())) % 11 - 5) / 100.0)
+                           WHERE CurrentPrice > 0";
+            
+            using (var cmd = new Microsoft.Data.SqlClient.SqlCommand(sql, connection))
+            {
+                int rows = cmd.ExecuteNonQuery();
+                return rows > 0;
+            }
+        }
     }
+    catch (Exception ex) 
+    { 
+        Console.WriteLine("Turn Update Error: " + ex.Message);
+        return false; 
+    }
+}
+    }
+    
 
     // Model class defined here to ensure compatibility
     public class MarketResource
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+       public string Name { get; set; } = "";
         public double CurrentPrice { get; set; }
         public int Supply { get; set; }
         public int Demand { get; set; }

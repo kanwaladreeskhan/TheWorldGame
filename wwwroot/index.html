@@ -31,8 +31,8 @@
                     <p class="text-muted">Strategy Lead | Global Market</p>
                 </div>
                 <div class="text-end">
-                    <button onclick="processNextTurn()" class="btn btn-warning px-4 py-2 fw-bold shadow">
-                        <i class="fas fa-forward me-2"></i> NEXT TURN
+                    <button onclick="nextTurn(event)" class="btn btn-warning fw-bold">
+                        <i class="fas fa-forward me-2"></i> Next Turn
                     </button>
                     <button onclick="logout()" class="btn btn-outline-danger ms-2">Exit</button>
                 </div>
@@ -87,6 +87,26 @@
         </div>
     </div>
 
-  <script src="script.js"></script>
+  <script src="script.js">async function nextTurn(event) {
+        const btn = event.target;
+        btn.disabled = true; // Button disable taake double click na ho
+        btn.innerHTML = "Processing..."; // User ko pata chale kaam ho raha hai
+        
+        try {
+            const res = await fetch('/api/market/next-turn', { method: 'POST' });
+            if (res.ok) {
+                alert("Turn Processed! Prices have shifted.");
+                location.reload(); // Nayi prices dekhne ke liye reload
+            } else {
+                alert("Server error during turn update.");
+            }
+        } catch (err) {
+            console.error("Turn Error:", err);
+            alert("Connection error!");
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = "Next Turn";
+        }
+    }</script>
 </body>
 </html>

@@ -97,18 +97,26 @@ namespace GlobalTradeSimulator.DataAccess
         }
 
         // 5. Get Leaderboard (Uses SQL VIEW 'Leaderboard')
-        public List<object> GetLeaderboard()
-        {
-            var list = new List<object>();
-            using var connection = new SqlConnection(_connString);
-            connection.Open();
-            var cmd = new SqlCommand("SELECT Name, TotalWealth FROM Leaderboard ORDER BY TotalWealth DESC", connection);
-            using var reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                list.Add(new { Name = reader.GetString(0), TotalWealth = Convert.ToDouble(reader["TotalWealth"]) });
-            }
-            return list;
-        }
+// 5. Get Leaderboard (Ab updated logic ke sath)
+public List<object> GetLeaderboard()
+{
+    var list = new List<object>();
+    using var connection = new SqlConnection(_connString);
+    connection.Open();
+    // Hum check kar rahe hain ke Name 'User' hai ya nahi (IsPlayer identify karne ke liye)
+    string sql = "SELECT Name, TotalWealth FROM Leaderboard ORDER BY TotalWealth DESC";
+    var cmd = new SqlCommand(sql, connection);
+    using var reader = cmd.ExecuteReader();
+    while (reader.Read())
+    {
+        string name = reader.GetString(0);
+        list.Add(new { 
+            Name = name, 
+            TotalWealth = Convert.ToDouble(reader["TotalWealth"]),
+            IsPlayer = (name.ToLower() == "aamnah") // Apne login name ke hisab se change karein
+        });
+    }
+    return list;
+}
     }
 }

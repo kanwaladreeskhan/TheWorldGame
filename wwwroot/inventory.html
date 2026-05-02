@@ -61,44 +61,41 @@
     <script src="app.js"></script>
     <script>
         async function loadInventory() {
-            const player = getCurrentPlayer();
-            if (!player) return;
+    // Pehle koshish karein login user mil jaye, warna '1' use karein
+    const player = getCurrentPlayer(); 
+    const id = (player && (player.PlayerId || player.Id)) ? (player.PlayerId || player.Id) : 1; 
 
-            try {
-                const id = player.PlayerId || player.Id;
-                const res = await fetch(`/api/player/${id}/inventory`);
-                const items = await res.json();
-                const tbody = document.getElementById('inventoryBody');
-                const noItems = document.getElementById('noItems');
+    try {
+        const res = await fetch(`/api/player/${id}/inventory`);
+        const items = await res.json();
+        const tbody = document.getElementById('inventoryBody');
+        const noItems = document.getElementById('noItems');
 
-                if (!items || items.length === 0) {
-                    tbody.innerHTML = "";
-                    noItems.classList.remove('d-none');
-                    return;
-                }
-
-                noItems.classList.add('d-none');
-                tbody.innerHTML = items.map(item => `
-                    <tr>
-                        <td class="align-middle fw-bold py-3">${item.ResourceName || item.resourceName}</td>
-                        <td class="text-center align-middle">
-                            <span class="resource-badge text-info">${(item.Quantity || item.quantity).toLocaleString()} units</span>
-                        </td>
-                        <td class="text-center align-middle">
-                            <button class="btn btn-sm btn-warning fw-bold px-3" 
-                                onclick="location.href='market.html?sell=${item.ResourceId || item.resourceId}'">
-                                Sell in Market
-                            </button>
-                        </td>
-                    </tr>
-                `).join('');
-            } catch (err) { console.error("Inventory Load Error:", err); }
+        if (!items || items.length === 0) {
+            tbody.innerHTML = "";
+            noItems.classList.remove('d-none');
+            return;
         }
 
-        window.onload = () => {
-            updateUI();
-            loadInventory();
-        };
+        noItems.classList.add('d-none');
+        tbody.innerHTML = items.map(item => `
+            <tr>
+                <td class="align-middle fw-bold py-3">${item.resourceName || item.ResourceName}</td>
+                <td class="text-center align-middle">
+                    <span class="resource-badge text-info">${(item.quantity || item.Quantity).toLocaleString()} units</span>
+                </td>
+                <td class="text-center align-middle">
+                    <button class="btn btn-sm btn-warning fw-bold px-3" 
+                        onclick="location.href='market.html?sell=${item.resourceId || item.ResourceId}'">
+                        Sell in Market
+                    </button>
+                </td>
+            </tr>
+        `).join('');
+    } catch (err) { 
+        console.error("Inventory Load Error:", err); 
+    }
+}
     </script>
 </body>
 </html>

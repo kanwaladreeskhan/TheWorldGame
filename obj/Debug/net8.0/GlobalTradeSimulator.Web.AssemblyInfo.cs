@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GlobalTradeSimulator.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e4e9eb40e425c339fb48ef2f748d0017491963ff")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fb908902cb708fb4c1d5f36aaaf58a8ed76d8c1d")]
 [assembly: System.Reflection.AssemblyProductAttribute("GlobalTradeSimulator.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GlobalTradeSimulator.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
