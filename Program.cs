@@ -20,6 +20,9 @@ builder.Services.AddCors(options => {
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddScoped<IGameEngine, GameEngine>();
+builder.Services.AddScoped<IWarService, WarService>();
+
 var app = builder.Build();
 
 // 3. Configure the HTTP request pipeline

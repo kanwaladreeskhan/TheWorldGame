@@ -2,146 +2,117 @@
 using System.Collections.Generic;
 using Microsoft.Data.SqlClient;
 using GlobalTradeSimulator.DataAccess;
+using Microsoft.Extensions.Configuration; // Configuration ke liye add karein
 
 namespace GlobalTradeSimulator.Services
 {
-    public class GameEngine
+    public class GameEngine : IGameEngine // Interface implement karna behtar hai
     {
         private readonly AIService _aiService;
         private readonly WarService _warService;
         private readonly GameStateRepository _repo;
-        private readonly string _connString = "Server=.\\LAB;Database=gameDB;Trusted_Connection=True;TrustServerCertificate=True;";
+        private readonly string _connString;
 
+        // Constructor mein connection string ko configuration se lein
         public GameEngine()
         {
             _aiService = new AIService();
             _warService = new WarService();
             _repo = new GameStateRepository();
+            // Connection string ko update karein ya appsettings.json se lein
+            _connString = "Server=.\\LAB;Database=gameDB;Trusted_Connection=True;TrustServerCertificate=True;";
         }
 
-        /// <summary>
-        /// MAIN GAME LOOP — Called when user clicks "Next Turn"
-        /// </summary>
         public NextTurnResult NextTurn(int playerId)
         {
             var result = new NextTurnResult();
-            var gameState = _repo.GetGameState();
-
-            Console.WriteLine($"\n{'=' * 60}");
-            Console.WriteLine($"⏩ NEXT TURN: {gameState.TurnNumber + 1} | Mode: {gameState.Mode}");
-            Console.WriteLine($"{'=' * 60}");
-
+            
             try
             {
-                // 1. Increment turn
-                _repo.IncrementTurn();
-                gameState.TurnNumber++;
+                var gameState = _repo.GetGameState();
 
-                // 2. Process War Scenario (may change mode)
+                // 1. Increment turn in DB
+                _repo.IncrementTurn();
+                int newTurn = gameState.TurnNumber + 1;
+
+                // 2. War Scenario
                 string warMessage = _warService.ProcessWarScenario();
                 if (!string.IsNullOrEmpty(warMessage))
                     result.Events.Add(warMessage);
 
-                // Refresh game state (may have changed due to war)
-                gameState = _repo.GetGameState();
+                // Fresh state fetch karein mode check karne ke liye
+                var updatedState = _repo.GetGameState();
 
-                // 3. Process ALL AI countries
-                Console.WriteLine("\n🤖 --- AI Phase ---");
+                // 3. AI Processing (Ensure this doesn't crash)
                 _aiService.ProcessAllAI();
-                result.Events.Add("AI countries completed their trades.");
+                result.Events.Add("AI units have adjusted their portfolios.");
 
-                // 4. Update Market Prices (basic version - Module 3 can enhance)
-                Console.WriteLine("\n📊 --- Market Update Phase ---");
-                string marketMessage = UpdateMarketPrices(gameState.Mode);
+                // 4. Market Update - Yahan masla ho sakta hai agar SQL fail ho
+                string marketMessage = UpdateMarketPrices(updatedState.Mode);
                 result.Events.Add(marketMessage);
 
-                // 5. Get updated player data
+                // 5. Finalize Results
                 result.PlayerBalance = GetPlayerBalance(playerId);
-                result.TurnNumber = gameState.TurnNumber;
-                result.GameMode = gameState.Mode;
+                result.TurnNumber = newTurn;
+                result.GameMode = updatedState.Mode;
 
-                Console.WriteLine($"\n✅ Turn {gameState.TurnNumber} Complete | Mode: {gameState.Mode}");
+                return result;
             }
             catch (Exception ex)
             {
-                result.Events.Add($"❌ Error: {ex.Message}");
-                Console.WriteLine($"❌ GameEngine Error: {ex.Message}");
+                // Detailed error logging
+                string errorMsg = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                result.Events.Add($"❌ Engine Failure: {errorMsg}");
+                return result;
             }
-
-            return result;
         }
 
-        /// <summary>
-        /// Basic market price update based on supply/demand dynamics
-        /// (This is a simplified version — Module 3 can build the full MarketService)
-        /// </summary>
         private string UpdateMarketPrices(string gameMode)
         {
-            using var conn = new SqlConnection(_connString);
-            conn.Open();
+            using (var conn = new SqlConnection(_connString))
+            {
+                conn.Open();
 
-            // Price formula: NewPrice = BasePrice + (Demand - Supply) * 0.1
-            // War mode: extra 20% price volatility
-            double volatilityMultiplier = gameMode == "War" ? 1.2 : 1.0;
+                double volatilityMultiplier = (gameMode == "War") ? 1.5 : 1.0; // War mein zyada volatility
+                
+                // Random changes generate karein
+                var rand = new Random();
+                int supplyChange = (gameMode == "War") ? rand.Next(-20, -5) : rand.Next(-10, 10);
+                int demandChange = (gameMode == "War") ? rand.Next(10, 30) : rand.Next(-5, 15);
 
-            string sql = @"
-                UPDATE MarketPrices 
-                SET CurrentPrice = CASE 
-                    WHEN CurrentPrice + ((Demand - Supply) * 0.1 * @volatility) > 10 
-                    THEN CurrentPrice + ((Demand - Supply) * 0.1 * @volatility)
-                    ELSE 10 
-                END,
-                -- Simulate natural supply changes
-                Supply = CASE 
-                    WHEN Supply + @supplyChange > 0 
-                    THEN Supply + @supplyChange 
-                    ELSE 1 
-                END,
-                Demand = CASE 
-                    WHEN Demand + @demandChange > 0 
-                    THEN Demand + @demandChange 
-                    ELSE 1 
-                END
-            ";
+                string sql = @"
+                    UPDATE MarketPrices 
+                    SET CurrentPrice = CASE 
+                        WHEN CurrentPrice + ((Demand - Supply) * 0.05 * @volatility) > 5 
+                        THEN CurrentPrice + ((Demand - Supply) * 0.05 * @volatility)
+                        ELSE 5 -- Price floor
+                    END,
+                    Supply = CASE WHEN Supply + @sChg > 0 THEN Supply + @sChg ELSE 10 END,
+                    Demand = CASE WHEN Demand + @dChg > 0 THEN Demand + @dChg ELSE 10 END";
 
-            // Random supply/demand shifts (more volatile in war)
-            int supplyChange = gameMode == "War" ? -15 : -5;
-            int demandChange = gameMode == "War" ? 20 : 5;
+                using (var cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@volatility", volatilityMultiplier);
+                    cmd.Parameters.AddWithValue("@sChg", supplyChange);
+                    cmd.Parameters.AddWithValue("@dChg", demandChange);
+                    cmd.ExecuteNonQuery();
+                }
+            }
 
-            using var cmd = new SqlCommand(sql, conn);
-            cmd.Parameters.AddWithValue("@volatility", volatilityMultiplier);
-            cmd.Parameters.AddWithValue("@supplyChange", supplyChange + new Random().Next(-10, 5));
-            cmd.Parameters.AddWithValue("@demandChange", demandChange + new Random().Next(10));
-            cmd.ExecuteNonQuery();
-
-            return gameMode == "War"
-                ? "🔥 Market updated with WAR volatility!"
-                : "📈 Market prices stabilized.";
+            return gameMode == "War" ? "🔥 High volatility market update!" : "📈 Regular market adjustment.";
         }
 
-        /// <summary>
-        /// Get player's current balance
-        /// </summary>
         private double GetPlayerBalance(int playerId)
         {
-            using var conn = new SqlConnection(_connString);
-            conn.Open();
-            string sql = "SELECT Balance FROM Players WHERE PlayerId = @pid";
-            using var cmd = new SqlCommand(sql, conn);
-            cmd.Parameters.AddWithValue("@pid", playerId);
-            var result = cmd.ExecuteScalar();
-            return result != null ? Convert.ToDouble(result) : 0;
+            try {
+                using var conn = new SqlConnection(_connString);
+                conn.Open();
+                string sql = "SELECT Balance FROM Players WHERE PlayerId = @pid";
+                using var cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@pid", playerId);
+                var res = cmd.ExecuteScalar();
+                return res != null ? Convert.ToDouble(res) : 0;
+            } catch { return 0; }
         }
-    }
-
-    /// <summary>
-    /// Result object returned after each turn
-    /// </summary>
-    public class NextTurnResult
-    {
-        public int TurnNumber { get; set; }
-        public string GameMode { get; set; } = "Normal";
-        public double PlayerBalance { get; set; }
-        public List<string> Events { get; set; } = new List<string>();
     }
 }

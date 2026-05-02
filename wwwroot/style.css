@@ -1,38 +1,155 @@
-﻿body {
-    background: linear-gradient(135deg, #0f172a, #1e2937);
-    color: #e2e8f0;
-    font-family: 'Segoe UI', sans-serif;
+﻿/* style.css */
+:root {
+    --neon-blue: #00d2ff;
+    --neon-green: #39ff14;
+    --bg-dark: #05070a;
 }
 
-.navbar {
-    background: rgba(15, 23, 42, 0.95) !important;
+body {
+    background: var(--bg-dark) !important;
+    /* Gaming Grid Effect */
+    background-image: 
+        linear-gradient(rgba(0, 210, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 210, 255, 0.05) 1px, transparent 1px) !important;
+    background-size: 30px 30px !important;
+    color: #f1f5f9 !important;
+    font-family: 'Segoe UI', sans-serif !important;
 }
 
-.card {
-    background: #1e2937;
-    border: none;
-    transition: all 0.3s;
+.glass-card, .card {
+    background: rgba(15, 23, 42, 0.8) !important;
+    backdrop-filter: blur(12px) !important;
+    border: 1px solid var(--neon-blue) !important;
+    box-shadow: 0 0 20px rgba(0, 210, 255, 0.2) !important;
+    border-radius: 15px !important;
 }
 
-    .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-    }
-
-.table {
-    background: #1e2937;
+.stat-val {
+    color: var(--neon-blue) !important;
+    text-shadow: 0 0 10px rgba(0, 210, 255, 0.5) !important;
+    font-size: 2.2rem !important;
+    font-weight: 800 !important;
 }
 
-.btn-trade {
+.nav-btn {
+    background: rgba(0, 210, 255, 0.1) !important;
+    border: 1px solid var(--neon-blue) !important;
+    color: white !important;
+    transition: 0.3s !important;
+}
+
+.nav-btn:hover {
+    background: var(--neon-blue) !important;
+    color: black !important;
+    box-shadow: 0 0 20px var(--neon-blue) !important;
+    transform: translateY(-5px) !important;
+}
+
+/* Leaderboard Specific Gaming Vibe */
+
+/* Ranking Table Container */
+.leaderboard-container {
+    background: rgba(5, 7, 10, 0.9);
+    border: 2px solid var(--neon-purple);
+    box-shadow: 0 0 30px rgba(157, 80, 187, 0.2);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Rank Number Styling */
+.rank-cell {
+    font-family: 'Oxanium', cursive;
+    font-size: 1.5rem;
+    font-weight: 900;
+    font-style: italic;
+    color: var(--neon-blue);
+}
+
+/* Top 3 Glow Effects */
+.rank-1 { 
+    color: #ffd700 !important; 
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.6); 
+}
+.rank-2 { 
+    color: #c0c0c0 !important; 
+    text-shadow: 0 0 10px rgba(192, 192, 192, 0.4); 
+}
+.rank-3 { 
+    color: #cd7f32 !important; 
+}
+
+/* Player Row Highlight */
+.current-player-row {
+    background: rgba(0, 210, 255, 0.1) !important;
+    border-left: 5px solid var(--neon-blue) !important;
+    animation: pulse-border 2s infinite;
+}
+
+@keyframes pulse-border {
+    0% { border-color: var(--neon-blue); }
+    50% { border-color: transparent; }
+    100% { border-color: var(--neon-blue); }
+}
+
+/* Table Row Hover */
+#leaderboardBody tr {
+    transition: all 0.2s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+#leaderboardBody tr:hover {
+    background: rgba(255, 255, 255, 0.05);
+    transform: scale(1.01) translateX(5px);
+    cursor: crosshair;
+}
+
+/* Wealth Column Glow */
+.wealth-text {
+    font-family: 'Courier New', monospace;
+    color: var(--neon-green);
     font-weight: bold;
+    letter-spacing: 1px;
 }
 
-.balance {
-    font-size: 1.8rem;
+/* Badge aur Ranking Fix */
+
+/* 1. AI Badge Styling */
+.badge.bg-info {
+    background: rgba(0, 210, 255, 0.2) !important;
+    border: 1px solid var(--neon-blue) !important;
+    color: var(--neon-blue) !important;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    margin-left: 10px;
+    border-radius: 4px;
+}
+
+/* 2. Rank Numbers Visibility */
+td:first-child {
+    font-family: 'Oxanium', sans-serif;
+    color: var(--neon-blue) !important;
     font-weight: bold;
-    color: #22c55e;
+    font-size: 1.2rem;
 }
 
-header {
-    background: #1e40af;
+/* 3. Top 3 Rankings (Gold, Silver, Bronze) */
+tr:nth-child(1) td:first-child { color: #ffd700 !important; text-shadow: 0 0 10px #ffd700; }
+tr:nth-child(2) td:first-child { color: #c0c0c0 !important; text-shadow: 0 0 10px #c0c0c0; }
+tr:nth-child(3) td:first-child { color: #cd7f32 !important; }
+
+/* 4. Column Headers Visibility */
+th {
+    color: rgba(255, 255, 255, 0.6) !important;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.8rem;
+    border-bottom: 2px solid rgba(0, 210, 255, 0.2) !important;
+}
+
+/* 5. Wealth Text Fix */
+td.text-success {
+    color: var(--neon-green) !important;
+    text-shadow: 0 0 5px rgba(57, 255, 20, 0.3);
 }
