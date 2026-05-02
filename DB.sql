@@ -1,36 +1,36 @@
-create database DB 
+-- =========================================
 
-Use DB
-go
+CREATE DATABASE db;
+GO
 
------------------------------------
+USE db;
+GO
+
+-- =========================
 -- COUNTRIES
------------------------------------
+-- =========================
 CREATE TABLE Countries (
     CountryId INT PRIMARY KEY,
     Name NVARCHAR(50) UNIQUE NOT NULL,
     StrategyType NVARCHAR(20) CHECK (StrategyType IN ('Aggressive','Balanced','Conservative')),
-    GDP FLOAT CHECK (GDP >= 0),
-    Population INT CHECK (Population >= 0)
+    GDP FLOAT,
+    Population INT
 );
 
-
------------------------------------
+-- =========================
 -- PLAYERS
------------------------------------
+-- =========================
 CREATE TABLE Players (
     PlayerId INT IDENTITY(1,1) PRIMARY KEY,
     Name NVARCHAR(50) NOT NULL,
-    CountryId INT NOT NULL,
+    CountryId INT,
     Balance FLOAT CHECK (Balance >= 0),
-
     FOREIGN KEY (CountryId) REFERENCES Countries(CountryId)
 );
 
-
------------------------------------
+-- =========================
 -- RESOURCES
------------------------------------
+-- =========================
 CREATE TABLE Resources (
     ResourceId INT PRIMARY KEY,
     Name NVARCHAR(50) UNIQUE NOT NULL,
@@ -38,87 +38,71 @@ CREATE TABLE Resources (
     Category NVARCHAR(50)
 );
 
-
------------------------------------
+-- =========================
 -- MARKET PRICES
------------------------------------
+-- =========================
 CREATE TABLE MarketPrices (
     ResourceId INT PRIMARY KEY,
     CurrentPrice FLOAT CHECK (CurrentPrice > 0),
-    Demand INT CHECK (Demand >= 0),
-    Supply INT CHECK (Supply >= 0),
-    LastUpdated DATETIME DEFAULT GETDATE(),
-
+    Demand INT DEFAULT 0,
+    Supply INT DEFAULT 0,
     FOREIGN KEY (ResourceId) REFERENCES Resources(ResourceId)
 );
 
-
------------------------------------
+-- =========================
 -- PLAYER RESOURCES
------------------------------------
+-- =========================
 CREATE TABLE PlayerResources (
     PlayerId INT,
     ResourceId INT,
     Quantity INT CHECK (Quantity >= 0),
-
     PRIMARY KEY (PlayerId, ResourceId),
-
     FOREIGN KEY (PlayerId) REFERENCES Players(PlayerId),
     FOREIGN KEY (ResourceId) REFERENCES Resources(ResourceId)
 );
 
-
------------------------------------
+-- =========================
 -- TRADES
------------------------------------
+-- =========================
 CREATE TABLE Trades (
     TradeId INT IDENTITY(1,1) PRIMARY KEY,
-    PlayerId INT NOT NULL,
-    ResourceId INT NOT NULL,
-    TradeType NVARCHAR(10),
+    PlayerId INT,
+    ResourceId INT,
+    TradeType NVARCHAR(10) CHECK (TradeType IN ('BUY','SELL')),
     Quantity INT CHECK (Quantity > 0),
     PriceAtTrade FLOAT CHECK (PriceAtTrade > 0),
     TradeDate DATETIME DEFAULT GETDATE(),
-
     FOREIGN KEY (PlayerId) REFERENCES Players(PlayerId),
-    FOREIGN KEY (ResourceId) REFERENCES Resources(ResourceId),
-
-    CONSTRAINT chk_trade_type CHECK (TradeType IN ('BUY','SELL'))
+    FOREIGN KEY (ResourceId) REFERENCES Resources(ResourceId)
 );
 
-
------------------------------------
+-- =========================
 -- AI RULES
------------------------------------
+-- =========================
 CREATE TABLE AIRules (
     RuleId INT IDENTITY(1,1) PRIMARY KEY,
-    ResourceId INT NOT NULL,
+    ResourceId INT,
     ConditionType NVARCHAR(20),
     Threshold INT,
     Action NVARCHAR(10),
     MinBalance FLOAT,
     MaxQuantity INT,
-
-    FOREIGN KEY (ResourceId) REFERENCES Resources(ResourceId),
-
-    CONSTRAINT chk_condition_type CHECK (ConditionType IN ('LOW','HIGH')),
-    CONSTRAINT chk_action_type CHECK (Action IN ('BUY','SELL'))
+    FOREIGN KEY (ResourceId) REFERENCES Resources(ResourceId)
 );
 
-
------------------------------------
+-- =========================
 -- TRADE LOGS
------------------------------------
+-- =========================
 CREATE TABLE TradeLogs (
     LogId INT IDENTITY(1,1) PRIMARY KEY,
     Message NVARCHAR(200),
     LogDate DATETIME DEFAULT GETDATE()
 );
 
+-- =========================================
+-- INSERT DATA
+-- =========================================
 
------------------------------------
--- INSERT COUNTRIES
------------------------------------
 INSERT INTO Countries VALUES
 (1,'USA','Aggressive',21000,330),
 (2,'China','Balanced',17000,1400),
@@ -129,10 +113,6 @@ INSERT INTO Countries VALUES
 (7,'Russia','Aggressive',1800,146),
 (8,'UAE','Balanced',500,10);
 
-
------------------------------------
--- INSERT RESOURCES
------------------------------------
 INSERT INTO Resources VALUES
 (1,'Oil',100,'Energy'),
 (2,'Gold',500,'Precious'),
@@ -143,11 +123,7 @@ INSERT INTO Resources VALUES
 (7,'Coal',60,'Energy'),
 (8,'Electronics',700,'Advanced');
 
-
------------------------------------
--- INSERT MARKET PRICES
------------------------------------
-INSERT INTO MarketPrices (ResourceId, CurrentPrice, Demand, Supply) VALUES
+INSERT INTO MarketPrices VALUES
 (1,110,500,400),
 (2,520,200,150),
 (3,25,800,900),
@@ -157,10 +133,6 @@ INSERT INTO MarketPrices (ResourceId, CurrentPrice, Demand, Supply) VALUES
 (7,70,450,500),
 (8,750,200,180);
 
-
------------------------------------
--- INSERT PLAYERS
------------------------------------
 INSERT INTO Players (Name, CountryId, Balance) VALUES
 ('Player1',1,5000),
 ('ChinaAI',2,7000),
@@ -171,10 +143,6 @@ INSERT INTO Players (Name, CountryId, Balance) VALUES
 ('RussiaAI',7,7500),
 ('UAEAI',8,8000);
 
-
------------------------------------
--- INSERT PLAYER RESOURCES
------------------------------------
 INSERT INTO PlayerResources VALUES
 (1,1,10),(1,2,5),(1,3,20),(1,4,8),(1,5,2),(1,6,6),(1,7,10),(1,8,1),
 (2,1,30),(2,2,10),(2,3,40),(2,4,25),(2,5,5),(2,6,20),(2,7,30),(2,8,10),
@@ -185,206 +153,197 @@ INSERT INTO PlayerResources VALUES
 (7,1,50),(7,2,8),(7,3,15),(7,4,35),(7,5,2),(7,6,25),(7,7,40),(7,8,5),
 (8,1,40),(8,2,12),(8,3,10),(8,4,8),(8,5,6),(8,6,15),(8,7,20),(8,8,7);
 
+-- =========================================
+-- VIEWS
+-- =========================================
 
------------------------------------
--- INSERT AI RULES
------------------------------------
-INSERT INTO AIRules (ResourceId, ConditionType, Threshold, Action, MinBalance, MaxQuantity) VALUES
-(1,'LOW',10,'BUY',1000,10),
-(1,'HIGH',40,'SELL',0,15),
-(3,'LOW',15,'BUY',500,20),
-(5,'HIGH',20,'SELL',0,5);
-
-
------------------------------------
--- VIEW: LEADERBOARD
------------------------------------
 CREATE VIEW Leaderboard AS
-SELECT 
-    p.PlayerId,
-    p.Name,
-    p.Balance + SUM(pr.Quantity * mp.CurrentPrice) AS TotalWealth
+SELECT p.PlayerId,
+       p.Name,
+       p.Balance + SUM(pr.Quantity * mp.CurrentPrice) AS TotalWealth
 FROM Players p
 JOIN PlayerResources pr ON p.PlayerId = pr.PlayerId
 JOIN MarketPrices mp ON pr.ResourceId = mp.ResourceId
 GROUP BY p.PlayerId, p.Name, p.Balance;
 
-
------------------------------------
--- VIEW: RESOURCE DEMAND
------------------------------------
 CREATE VIEW ResourceDemand AS
-SELECT 
-    r.Name,
-    mp.CurrentPrice,
-    mp.Demand,
-    mp.Supply
-FROM MarketPrices mp
-JOIN Resources r ON mp.ResourceId = r.ResourceId;
+SELECT r.ResourceId,
+       r.Name,
+       mp.Demand,
+       mp.Supply,
+       mp.CurrentPrice
+FROM Resources r
+JOIN MarketPrices mp ON r.ResourceId = mp.ResourceId;
 
+-- =========================================
+-- MARKET PRICE UPDATE PROCEDURE
+-- Formula:
+-- NewPrice = BasePrice + ((Demand - Supply) * 0.5)
+-- =========================================
 
------------------------------------
--- PROCEDURE: BUY RESOURCE
------------------------------------
+CREATE PROCEDURE UpdateMarketPrice
+@ResourceId INT
+AS
+BEGIN
+    DECLARE @BasePrice FLOAT;
+    DECLARE @Demand INT;
+    DECLARE @Supply INT;
+    DECLARE @NewPrice FLOAT;
+
+    SELECT @BasePrice = r.BasePrice,
+           @Demand = m.Demand,
+           @Supply = m.Supply
+    FROM Resources r
+    JOIN MarketPrices m ON r.ResourceId = m.ResourceId
+    WHERE r.ResourceId = @ResourceId;
+
+    SET @NewPrice = @BasePrice + ((@Demand - @Supply) * 0.5);
+
+    IF @NewPrice < 1
+        SET @NewPrice = 1;
+
+    UPDATE MarketPrices
+    SET CurrentPrice = @NewPrice
+    WHERE ResourceId = @ResourceId;
+END;
 GO
+
+-- =========================================
+-- BUY RESOURCE PROCEDURE
+-- =========================================
+
 CREATE PROCEDURE BuyResource
-    @PlayerId INT,
-    @ResourceId INT,
-    @Qty INT
+@PlayerId INT,
+@ResourceId INT,
+@Qty INT
 AS
 BEGIN
-    BEGIN TRY
-        BEGIN TRANSACTION
+    DECLARE @Price FLOAT;
+    DECLARE @Balance FLOAT;
 
-        DECLARE @Price FLOAT
-        DECLARE @Balance FLOAT
+    IF @Qty <= 0
+    BEGIN
+        PRINT 'Invalid Quantity';
+        RETURN;
+    END
 
-        IF @Qty <= 0
-        BEGIN
-            PRINT 'Invalid Quantity'
-            ROLLBACK TRANSACTION
-            RETURN
-        END
+    SELECT @Price = CurrentPrice FROM MarketPrices WHERE ResourceId = @ResourceId;
+    SELECT @Balance = Balance FROM Players WHERE PlayerId = @PlayerId;
 
-        SELECT @Price = CurrentPrice 
-        FROM MarketPrices 
-        WHERE ResourceId = @ResourceId
+    IF @Balance < (@Price * @Qty)
+    BEGIN
+        PRINT 'Insufficient Balance';
+        RETURN;
+    END
 
-        SELECT @Balance = Balance 
-        FROM Players 
-        WHERE PlayerId = @PlayerId
+    UPDATE Players
+    SET Balance = Balance - (@Price * @Qty)
+    WHERE PlayerId = @PlayerId;
 
-        IF @Price IS NULL
-        BEGIN
-            PRINT 'Invalid Resource'
-            ROLLBACK TRANSACTION
-            RETURN
-        END
-
-        IF @Balance < (@Price * @Qty)
-        BEGIN
-            PRINT 'Insufficient Balance'
-            ROLLBACK TRANSACTION
-            RETURN
-        END
-
-        UPDATE Players
-        SET Balance = Balance - (@Price * @Qty)
-        WHERE PlayerId = @PlayerId
-
-        IF EXISTS (
-            SELECT 1 
-            FROM PlayerResources 
-            WHERE PlayerId = @PlayerId AND ResourceId = @ResourceId
-        )
-        BEGIN
-            UPDATE PlayerResources
-            SET Quantity = Quantity + @Qty
-            WHERE PlayerId = @PlayerId AND ResourceId = @ResourceId
-        END
-        ELSE
-        BEGIN
-            INSERT INTO PlayerResources (PlayerId, ResourceId, Quantity)
-            VALUES (@PlayerId, @ResourceId, @Qty)
-        END
-
-        INSERT INTO Trades (PlayerId, ResourceId, TradeType, Quantity, PriceAtTrade)
-        VALUES (@PlayerId, @ResourceId, 'BUY', @Qty, @Price)
-
-        COMMIT TRANSACTION
-    END TRY
-
-    BEGIN CATCH
-        ROLLBACK TRANSACTION
-        PRINT 'Buy Transaction Failed'
-    END CATCH
-END;
-GO
-
-
------------------------------------
--- PROCEDURE: SELL RESOURCE
------------------------------------
-CREATE PROCEDURE SellResource
-    @PlayerId INT,
-    @ResourceId INT,
-    @Qty INT
-AS
-BEGIN
-    BEGIN TRY
-        BEGIN TRANSACTION
-
-        DECLARE @Price FLOAT
-        DECLARE @Owned INT
-
-        IF @Qty <= 0
-        BEGIN
-            PRINT 'Invalid Quantity'
-            ROLLBACK TRANSACTION
-            RETURN
-        END
-
-        SELECT @Price = CurrentPrice 
-        FROM MarketPrices 
-        WHERE ResourceId = @ResourceId
-
-        SELECT @Owned = Quantity
-        FROM PlayerResources
-        WHERE PlayerId = @PlayerId AND ResourceId = @ResourceId
-
-        IF @Owned IS NULL OR @Owned < @Qty
-        BEGIN
-            PRINT 'Not enough resource'
-            ROLLBACK TRANSACTION
-            RETURN
-        END
-
-        UPDATE Players
-        SET Balance = Balance + (@Price * @Qty)
-        WHERE PlayerId = @PlayerId
-
+    IF EXISTS (SELECT * FROM PlayerResources WHERE PlayerId=@PlayerId AND ResourceId=@ResourceId)
+    BEGIN
         UPDATE PlayerResources
-        SET Quantity = Quantity - @Qty
-        WHERE PlayerId = @PlayerId AND ResourceId = @ResourceId
+        SET Quantity = Quantity + @Qty
+        WHERE PlayerId=@PlayerId AND ResourceId=@ResourceId;
+    END
+    ELSE
+    BEGIN
+        INSERT INTO PlayerResources(PlayerId, ResourceId, Quantity)
+        VALUES(@PlayerId, @ResourceId, @Qty);
+    END
 
-        INSERT INTO Trades (PlayerId, ResourceId, TradeType, Quantity, PriceAtTrade)
-        VALUES (@PlayerId, @ResourceId, 'SELL', @Qty, @Price)
+    UPDATE MarketPrices
+    SET Demand = Demand + @Qty
+    WHERE ResourceId = @ResourceId;
 
-        COMMIT TRANSACTION
-    END TRY
+    INSERT INTO Trades(PlayerId, ResourceId, TradeType, Quantity, PriceAtTrade)
+    VALUES(@PlayerId, @ResourceId, 'BUY', @Qty, @Price);
 
-    BEGIN CATCH
-        ROLLBACK TRANSACTION
-        PRINT 'Sell Transaction Failed'
-    END CATCH
+    EXEC UpdateMarketPrice @ResourceId;
 END;
 GO
 
+-- =========================================
+-- SELL RESOURCE PROCEDURE
+-- =========================================
 
------------------------------------
--- TRIGGER: LOG TRADES
------------------------------------
+CREATE PROCEDURE SellResource
+@PlayerId INT,
+@ResourceId INT,
+@Qty INT
+AS
+BEGIN
+    DECLARE @Price FLOAT;
+    DECLARE @Owned INT;
+
+    IF @Qty <= 0
+    BEGIN
+        PRINT 'Invalid Quantity';
+        RETURN;
+    END
+
+    SELECT @Price = CurrentPrice FROM MarketPrices WHERE ResourceId = @ResourceId;
+
+    SELECT @Owned = Quantity
+    FROM PlayerResources
+    WHERE PlayerId=@PlayerId AND ResourceId=@ResourceId;
+
+    IF @Owned IS NULL OR @Owned < @Qty
+    BEGIN
+        PRINT 'Not enough resource';
+        RETURN;
+    END
+
+    UPDATE Players
+    SET Balance = Balance + (@Price * @Qty)
+    WHERE PlayerId=@PlayerId;
+
+    UPDATE PlayerResources
+    SET Quantity = Quantity - @Qty
+    WHERE PlayerId=@PlayerId AND ResourceId=@ResourceId;
+
+    UPDATE MarketPrices
+    SET Supply = Supply + @Qty
+    WHERE ResourceId=@ResourceId;
+
+    INSERT INTO Trades(PlayerId, ResourceId, TradeType, Quantity, PriceAtTrade)
+    VALUES(@PlayerId, @ResourceId, 'SELL', @Qty, @Price);
+
+    EXEC UpdateMarketPrice @ResourceId;
+END;
+GO
+
+-- =========================================
+-- TRIGGER
+-- =========================================
+
 CREATE TRIGGER trg_LogTrade
 ON Trades
 AFTER INSERT
 AS
 BEGIN
     INSERT INTO TradeLogs (Message)
-    SELECT 
-        'Player ' + CAST(PlayerId AS NVARCHAR(10)) +
-        ' executed ' + TradeType +
-        ' for Resource ' + CAST(ResourceId AS NVARCHAR(10)) +
-        ' Qty: ' + CAST(Quantity AS NVARCHAR(10))
-    FROM inserted
+    SELECT 'Trade executed: Player ' + CAST(PlayerId AS NVARCHAR(10)) +
+           ' | Resource ' + CAST(ResourceId AS NVARCHAR(10)) +
+           ' | Type ' + TradeType
+    FROM inserted;
 END;
 GO
 
-
------------------------------------
+-- =========================================
 -- INDEXES
------------------------------------
+-- =========================================
+
 CREATE INDEX idx_player_balance ON Players(Balance);
 CREATE INDEX idx_trade_player ON Trades(PlayerId);
-CREATE INDEX idx_trade_resource ON Trades(ResourceId);
-CREATE INDEX idx_resource ON PlayerResources(ResourceId);
-GO
+CREATE INDEX idx_resource_player ON PlayerResources(ResourceId);
+
+-- =========================================
+-- SAMPLE TRADES
+-- =========================================
+
+EXEC BuyResource 1,1,5;
+EXEC SellResource 2,2,3;
+EXEC BuyResource 3,4,10;
+EXEC BuyResource 4,5,2;
+EXEC SellResource 5,3,10;
