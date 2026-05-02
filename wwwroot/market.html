@@ -28,6 +28,7 @@
                         <th>Resource</th>
                         <th>Price ($)</th>
                         <th>Supply</th>
+                        <th>Demand</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -61,7 +62,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="app.js"></script>
     <script>
-        // Market load logic (Inside market.html script)
+        // ── Market Table Load ──
         async function loadMarket() {
             try {
                 const res = await fetch('/api/market');
@@ -69,26 +70,27 @@
                 const tbody = document.querySelector('#marketTable tbody');
 
                 tbody.innerHTML = data.map(item => `
-            <tr>
-                <td>${item.Id}</td>
-                <td>${item.Name}</td>
-                <td class="text-success fw-bold">$${(item.CurrentPrice || 0).toFixed(2)}</td>
-                <td>${item.Supply}</td>
-                <td>${item.Demand}</td>
-                <td><button class="btn btn-sm btn-primary" onclick="document.getElementById('resourceId').value=${item.Id}">Select</button></td>
-            </tr>
-        `).join('');
-            } catch (err) { console.error(err); }
+                        <tr>
+                            <td>${item.Id}</td>
+                            <td>${item.Name}</td>
+                            <td class="text-success fw-bold">$${(item.CurrentPrice || 0).toFixed(2)}</td>
+                            <td>${item.Supply}</td>
+                            <td>${item.Demand}</td>
+                            <td><button class="btn btn-sm btn-primary"
+                                onclick="document.getElementById('resourceId').value=${item.Id}">Select</button></td>
+                        </tr>
+                    `).join('');
+            } catch (err) {
+                console.error("Market load error:", err);
+            }
         }
 
-        // Execute Trade logic (Inside market.html script)
+        // ── Execute Trade ──
         async function executeTrade() {
             const saved = localStorage.getItem('currentPlayer');
             if (!saved) return alert("Please select a country from the home page first!");
 
             const player = JSON.parse(saved);
-            console.log("Current Player from Storage:", player); // Check karein yahan PlayerId hai ya nahi
-
             const resId = document.getElementById('resourceId').value;
             const qty = document.getElementById('quantity').value;
             const act = document.getElementById('action').value;
@@ -96,13 +98,13 @@
             if (!resId || !qty) return alert("Please select a resource and enter quantity!");
 
             const payload = {
-                PlayerId: parseInt(player.PlayerId), // Ensure it's a number
+                PlayerId: parseInt(player.PlayerId || player.Id),
                 ResourceId: parseInt(resId),
                 Quantity: parseInt(qty),
                 Action: act
             };
-         
-            console.log("Sending Payload to API:", payload);
+
+            console.log("Sending payload:", payload);
 
             try {
                 const res = await fetch('/api/trade', {
@@ -114,26 +116,31 @@
                 const result = await res.json();
 
                 if (res.ok) {
-                    alert("Success: " + result.message);
-                    // Balance update karne ke liye naya data fetch karein
-                    const upRes = await fetch(`/api/player/${player.Name}`);
-                    const updatedPlayer = await upRes.json();
-                    localStorage.setItem('currentPlayer', JSON.stringify(updatedPlayer));
+                    // Balance refresh — player name se updated data fetch karo
+                    try {
+                        const upRes = await fetch(`/api/player/${encodeURIComponent(player.Name)}`);
+                        if (upRes.ok) {
+                            const updatedPlayer = await upRes.json();
+                            // PlayerId preserve karo
+                            updatedPlayer.PlayerId = updatedPlayer.Id || updatedPlayer.PlayerId || player.PlayerId;
+                            localStorage.setItem('currentPlayer', JSON.stringify(updatedPlayer));
+                        }
+                    } catch (e) { /* balance update fail ho to bhi trade success show karo */ }
+
+                    alert("✅ Trade Successful!\n" + result.message);
                     location.reload();
                 } else {
-                    // SQL Errors yahan dikhengy (like Insufficient Balance)
-                    alert("Trade Error: " + result.message);
+                    alert("❌ Trade Error: " + (result.message || "Unknown error"));
                 }
             } catch (err) {
+                console.error("Trade error:", err);
                 alert("System Error: Could not connect to Server.");
             }
         }
 
-           
-
-        // IMPORTANT: Function call
+        // Page load
         window.onload = () => {
-            updateBalanceUI();     // ← Yeh line add karo
+            updateBalanceUI();
             loadMarket();
         };
     </script>

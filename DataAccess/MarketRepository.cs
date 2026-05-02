@@ -7,17 +7,11 @@ namespace GlobalTradeSimulator.DataAccess
 {
     public class MarketRepository
     {
-        // Connection String (Aapki Machine ke mutabiq)
-        private readonly string _connString = "Server=.\\SQLEXPRESS;Database=gameDB;Trusted_Connection=True;TrustServerCertificate=True;";
+        private readonly string _connString = "Server=DESKTOP-R9F65GH\\SQLEXPRESS03;Database=gameDB;Trusted_Connection=True;Encrypt=False;TrustServerCertificate=True;";
 
-        /// <summary>
-        /// Database se saare resources, unki prices, supply aur demand fetch karta hai.
-        /// </summary>
         public List<MarketResource> GetMarketPrices()
         {
             var list = new List<MarketResource>();
-            // CONNECTION STRING CHECK: Kya server name bilkul yahi hai?
-            string _connString = "Server=.\\SQLEXPRESS;Database=gameDB;Trusted_Connection=True;TrustServerCertificate=True;";
 
             try
             {
@@ -25,42 +19,39 @@ namespace GlobalTradeSimulator.DataAccess
                 {
                     conn.Open();
                     string sql = "SELECT r.ResourceId, r.Name, mp.CurrentPrice, mp.Supply, mp.Demand " +
-                        "FROM Resources r JOIN MarketPrices mp ON r.ResourceId = mp.ResourceId order by ResourceId" 
-                     ;
+                                 "FROM Resources r JOIN MarketPrices mp ON r.ResourceId = mp.ResourceId ORDER BY r.ResourceId";
+
                     using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        while (reader.Read())
                         {
-                            while (reader.Read())
+                            list.Add(new MarketResource
                             {
-                                list.Add(new MarketResource
-                                {
-                                    Id = reader.GetInt32(0),
-                                    Name = reader.GetString(1),
-                                    CurrentPrice = Convert.ToDouble(reader[2]),
-                                    Supply = reader.GetInt32(3),
-                                    Demand = reader.GetInt32(4)
-                                });
-                            }
+                                Id = reader.GetInt32(0),
+                                Name = reader.GetString(1),
+                                CurrentPrice = Convert.ToDouble(reader[2]),
+                                Supply = reader.GetInt32(3),
+                                Demand = reader.GetInt32(4)
+                            });
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                // YE LINE DEBUGGING MEIN MADAD KAREGI
                 throw new Exception("Database Connection Error: " + ex.Message);
             }
+
             return list;
         }
     }
 
-    // Model class for Market Data (Ensure this matches your Models folder or keep it here)
     public class MarketResource
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public double CurrentPrice { get; set; } // SQL column ka naam yahi hai
+        public double CurrentPrice { get; set; }
         public int Supply { get; set; }
         public int Demand { get; set; }
     }
