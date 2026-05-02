@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using GlobalTradeSimulator.DataAccess;
 using System;
+using System.Collections.Generic;
 
 namespace GlobalTradeSimulator.Web.Controllers
 {
@@ -10,7 +11,7 @@ namespace GlobalTradeSimulator.Web.Controllers
     {
         private readonly MarketRepository _marketRepo = new MarketRepository();
 
-        // SIRF EK HI [HttpGet] HONA CHAHIYE
+        // GET: api/market
         [HttpGet]
         public IActionResult GetAllMarketData()
         {
@@ -19,24 +20,35 @@ namespace GlobalTradeSimulator.Web.Controllers
                 var data = _marketRepo.GetMarketPrices();
 
                 if (data == null || data.Count == 0)
-                    return Ok(new { message = "Market is empty" });
+                {
+                    // Returning empty list instead of message object for frontend map() compatibility
+                    return Ok(new List<MarketResource>());
+                }
 
                 return Ok(data);
             }
             catch (Exception ex)
             {
+                // This will show up in the browser console if backend fails
                 return StatusCode(500, new { message = ex.Message });
             }
         }
 
-        // Agar specific ID chahiye ho toh rasta badalna parta hai: [HttpGet("{id}")]
+        // GET: api/market/{id}
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var data = _marketRepo.GetMarketPrices();
-            var item = data.Find(x => x.Id == id);
-            if (item == null) return NotFound();
-            return Ok(item);
+            try 
+            {
+                var data = _marketRepo.GetMarketPrices();
+                var item = data.Find(x => x.Id == id);
+                if (item == null) return NotFound(new { message = "Resource not found" });
+                return Ok(item);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = ex.Message });
+            }
         }
     }
 }

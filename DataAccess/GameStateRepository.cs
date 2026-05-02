@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Collections.Generic;
 using GlobalTradeSimulator.Models;
 
@@ -7,7 +7,7 @@ namespace GlobalTradeSimulator.DataAccess
 {
     public class GameStateRepository
     {
-        private readonly string _connString = "Server=.\\SQLEXPRESS;Database=gameDB;Trusted_Connection=True;TrustServerCertificate=True;";
+        private readonly string _connString = "Server=.\\LAB;Database=gameDB;Trusted_Connection=True;TrustServerCertificate=True;";
 
         // Get current game state
         public GameState GetGameState()

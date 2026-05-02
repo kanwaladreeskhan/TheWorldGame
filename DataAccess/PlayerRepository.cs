@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using GlobalTradeSimulator.Models;
 
 namespace GlobalTradeSimulator.DataAccess
@@ -8,7 +8,7 @@ namespace GlobalTradeSimulator.DataAccess
     public class PlayerRepository
     {
         // Connection String ek hi jagah rakhein
-        private readonly string _connString = "Server=.\\SQLEXPRESS;Database=gameDB;Trusted_Connection=True;TrustServerCertificate=True;";
+        private readonly string _connString = "Server=.\\LAB;Database=gameDB;Trusted_Connection=True;TrustServerCertificate=True;";
 
         // 1. Get Player by Name (For Login)
         public Player? GetPlayer(string name)

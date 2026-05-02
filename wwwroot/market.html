@@ -3,139 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Market - Global Trade</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <title>Global Market | Trade Simulator</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #0f172a; color: white; font-family: 'Segoe UI', sans-serif; }
+        .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); }
+        .navbar { background: #1e293b; border-bottom: 2px solid #334155; }
+        .btn-primary { background: #3b82f6; border: none; transition: 0.3s; }
+        .btn-primary:hover { background: #2563eb; transform: translateY(-2px); }
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">← Back to Countries</a>
-            <div class="ms-auto">
-                <span id="playerName" class="me-3"></span>
-                <span class="balance">Balance: $<span id="balance"></span></span>
-            </div>
-        </div>
-    </nav>
 
-    <div class="container mt-4">
-        <h2 class="mb-4">📊 Current Market</h2>
-        <div class="table-responsive">
-            <table class="table table-dark table-hover" id="marketTable">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Resource</th>
-                        <th>Price ($)</th>
-                        <th>Supply</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
-
-        <!-- Trade Form -->
-        <div class="card mt-4 p-4">
-            <h4>Make a Trade</h4>
-            <div class="row g-3">
-                <div class="col-md-3">
-                    <input type="number" id="resourceId" class="form-control" placeholder="Resource ID">
-                </div>
-                <div class="col-md-3">
-                    <select id="action" class="form-select">
-                        <option value="BUY">BUY</option>
-                        <option value="SELL">SELL</option>
-                    </select>
-                </div>
-                <div class="col-md-3">
-                    <input type="number" id="quantity" class="form-control" placeholder="Quantity" value="1">
-                </div>
-                <div class="col-md-3">
-                    <button onclick="executeTrade()" class="btn btn-success w-100 btn-trade">Execute Trade</button>
-                </div>
-            </div>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark mb-4">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">🌎 Global Trade</a>
+        <div class="ms-auto">
+            <span id="playerNameDisplay" class="me-3 text-info fw-bold"></span>
+            <span id="playerBalanceDisplay" class="badge bg-success p-2"></span>
         </div>
     </div>
+</nav>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="app.js"></script>
-    <script>
-        // Market load logic (Inside market.html script)
-        async function loadMarket() {
-            try {
-                const res = await fetch('/api/market');
-                const data = await res.json();
-                const tbody = document.querySelector('#marketTable tbody');
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Global Resource Market</h2>
+        <button class="btn btn-outline-light btn-sm" onclick="loadMarket()">🔄 Refresh Prices</button>
+    </div>
 
-                tbody.innerHTML = data.map(item => `
-            <tr>
-                <td>${item.Id}</td>
-                <td>${item.Name}</td>
-                <td class="text-success fw-bold">$${(item.CurrentPrice || 0).toFixed(2)}</td>
-                <td>${item.Supply}</td>
-                <td>${item.Demand}</td>
-                <td><button class="btn btn-sm btn-primary" onclick="document.getElementById('resourceId').value=${item.Id}">Select</button></td>
-            </tr>
-        `).join('');
-            } catch (err) { console.error(err); }
-        }
+    <!-- Market Table -->
+    <div class="table-responsive glass-card p-3">
+        <table class="table table-dark table-hover mb-0" id="marketTable">
+            <thead>
+                <tr>
+                    <th>Resource</th>
+                    <th>Live Price</th>
+                    <th>Supply</th>
+                    <th>Demand</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody id="marketBody">
+                <!-- Data will be loaded here via JavaScript -->
+            </tbody>
+        </table>
+    </div>
+</div>
 
-        // Execute Trade logic (Inside market.html script)
-        async function executeTrade() {
-            const saved = localStorage.getItem('currentPlayer');
-            if (!saved) return alert("Please select a country from the home page first!");
-
-            const player = JSON.parse(saved);
-            console.log("Current Player from Storage:", player); // Check karein yahan PlayerId hai ya nahi
-
-            const resId = document.getElementById('resourceId').value;
-            const qty = document.getElementById('quantity').value;
-            const act = document.getElementById('action').value;
-
-            if (!resId || !qty) return alert("Please select a resource and enter quantity!");
-
-            const payload = {
-                PlayerId: parseInt(player.PlayerId), // Ensure it's a number
-                ResourceId: parseInt(resId),
-                Quantity: parseInt(qty),
-                Action: act
-            };
-         
-            console.log("Sending Payload to API:", payload);
-
-            try {
-                const res = await fetch('/api/trade', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                const result = await res.json();
-
-                if (res.ok) {
-                    alert("Success: " + result.message);
-                    // Balance update karne ke liye naya data fetch karein
-                    const upRes = await fetch(`/api/player/${player.Name}`);
-                    const updatedPlayer = await upRes.json();
-                    localStorage.setItem('currentPlayer', JSON.stringify(updatedPlayer));
-                    location.reload();
-                } else {
-                    // SQL Errors yahan dikhengy (like Insufficient Balance)
-                    alert("Trade Error: " + result.message);
-                }
-            } catch (err) {
-                alert("System Error: Could not connect to Server.");
+<!-- Scripts -->
+<script src="app.js"></script>
+<script>
+    // Global function to load data from /api/market
+    async function loadMarket() {
+        try {
+            const res = await fetch('/api/market');
+            if (!res.ok) throw new Error("Failed to fetch market data");
+            
+            const data = await res.json();
+            const tbody = document.getElementById('marketBody');
+            
+            // Check if data is empty
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center">No resources available in market.</td></tr>';
+                return;
             }
+
+            tbody.innerHTML = data.map(item => `
+                <tr>
+                    <td class="fw-bold text-light">${item.Name}</td>
+                    <td class="text-success fw-bold">$${item.CurrentPrice.toFixed(2)}</td>
+                    <td>${item.Supply} units</td>
+                    <td>${item.Demand} units</td>
+                    <td class="text-center">
+                        <button class="btn btn-sm btn-primary" onclick="quickTrade(${item.Id}, 'BUY')">Buy</button>
+                        <button class="btn btn-sm btn-outline-danger ms-2" onclick="quickTrade(${item.Id}, 'SELL')">Sell</button>
+                    </td>
+                </tr>
+            `).join('');
+        } catch (error) {
+            console.error("Market Load Error:", error);
+            document.getElementById('marketBody').innerHTML = `<tr><td colspan="5" class="text-danger text-center">Error: Could not connect to API.</td></tr>`;
         }
+    }
 
-           
+    async function quickTrade(resId, action) {
+        const qty = prompt(`Enter quantity to ${action}:`, "1");
+        if (!qty || isNaN(qty) || parseInt(qty) <= 0) return;
 
-        // IMPORTANT: Function call
-        window.onload = () => {
-            updateBalanceUI();     // ← Yeh line add karo
-            loadMarket();
+        // Ensure getCurrentPlayer() exists in your app.js
+        const player = typeof getCurrentPlayer === 'function' ? getCurrentPlayer() : { PlayerId: 1 }; 
+        
+        const payload = {
+            PlayerId: player.PlayerId,
+            ResourceId: resId,
+            Quantity: parseInt(qty),
+            Action: action
         };
-    </script>
+
+        try {
+            const res = await fetch('/api/trade', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(payload)
+            });
+            
+            const result = await res.json();
+            alert(result.message || (res.ok ? "Trade Successful!" : "Trade Failed"));
+            
+            // UI Update functions (if defined in app.js)
+            if (typeof refreshPlayerData === 'function') refreshPlayerData();
+            loadMarket();
+        } catch (error) {
+            alert("Connection error while trading.");
+        }
+    }
+
+    // Initialize UI on page load
+    window.onload = () => { 
+        if (typeof updateUI === 'function') updateUI(); 
+        loadMarket(); 
+        
+        // Display player info if available
+        const player = JSON.parse(localStorage.getItem('currentPlayer'));
+        if(player) {
+            document.getElementById('playerNameDisplay').innerText = player.Name;
+            document.getElementById('playerBalanceDisplay').innerText = "$" + player.Balance;
+        }
+    };
+</script>
 </body>
 </html>

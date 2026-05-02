@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using GlobalTradeSimulator.Services;
+using System;
 
 namespace GlobalTradeSimulator.Web.Controllers
 {
@@ -16,7 +17,6 @@ namespace GlobalTradeSimulator.Web.Controllers
             _warService = new WarService();
         }
 
-        // POST: api/game/next-turn
         [HttpPost("next-turn")]
         public IActionResult NextTurn([FromBody] TurnRequest request)
         {
@@ -38,37 +38,19 @@ namespace GlobalTradeSimulator.Web.Controllers
             }
         }
 
-        // GET: api/game/state
         [HttpGet("state")]
         public IActionResult GetGameState()
         {
             var state = _warService.GetState();
-            return Ok(new
-            {
-                turnNumber = state.TurnNumber,
-                mode = state.Mode
-            });
+            return Ok(new { turnNumber = state.TurnNumber, mode = state.Mode });
         }
 
-        // POST: api/game/start-war (Admin trigger)
         [HttpPost("start-war")]
-        public IActionResult StartWar()
-        {
-            string message = _warService.StartWar();
-            return Ok(new { message });
-        }
+        public IActionResult StartWar() => Ok(new { message = _warService.StartWar() });
 
-        // POST: api/game/end-war (Admin trigger)
         [HttpPost("end-war")]
-        public IActionResult EndWar()
-        {
-            string message = _warService.EndWar();
-            return Ok(new { message });
-        }
+        public IActionResult EndWar() => Ok(new { message = _warService.EndWar() });
     }
 
-    public class TurnRequest
-    {
-        public int PlayerId { get; set; }
-    }
+    public class TurnRequest { public int PlayerId { get; set; } }
 }

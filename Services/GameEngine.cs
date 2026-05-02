@@ -10,7 +10,7 @@ namespace GlobalTradeSimulator.Services
         private readonly AIService _aiService;
         private readonly WarService _warService;
         private readonly GameStateRepository _repo;
-        private readonly string _connString = "Server=.\\SQLEXPRESS;Database=gameDB;Trusted_Connection=True;TrustServerCertificate=True;";
+        private readonly string _connString = "Server=.\\LAB;Database=gameDB;Trusted_Connection=True;TrustServerCertificate=True;";
 
         public GameEngine()
         {

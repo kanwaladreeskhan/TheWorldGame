@@ -1,32 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using GlobalTradeSimulator.Models;
 
 namespace GlobalTradeSimulator.DataAccess
 {
     public class MarketRepository
     {
-        // Connection String (Aapki Machine ke mutabiq)
-        private readonly string _connString = "Server=.\\SQLEXPRESS;Database=gameDB;Trusted_Connection=True;TrustServerCertificate=True;";
+        // Connection String: Ensure this matches your SSMS server name
+        private readonly string _connString = "Server=.\\LAB;Database=gameDB;Trusted_Connection=True;TrustServerCertificate=True;";
 
-        /// <summary>
-        /// Database se saare resources, unki prices, supply aur demand fetch karta hai.
-        /// </summary>
         public List<MarketResource> GetMarketPrices()
         {
             var list = new List<MarketResource>();
-            // CONNECTION STRING CHECK: Kya server name bilkul yahi hai?
-            string _connString = "Server=.\\SQLEXPRESS;Database=gameDB;Trusted_Connection=True;TrustServerCertificate=True;";
 
             try
             {
                 using (SqlConnection conn = new SqlConnection(_connString))
                 {
                     conn.Open();
-                    string sql = "SELECT r.ResourceId, r.Name, mp.CurrentPrice, mp.Supply, mp.Demand " +
-                        "FROM Resources r JOIN MarketPrices mp ON r.ResourceId = mp.ResourceId order by ResourceId" 
-                     ;
+                    // Accurate Query joining Resources and MarketPrices
+                    string sql = @"SELECT r.ResourceId, r.Name, mp.CurrentPrice, mp.Supply, mp.Demand 
+                                 FROM Resources r 
+                                 JOIN MarketPrices mp ON r.ResourceId = mp.ResourceId 
+                                 ORDER BY r.ResourceId";
+
                     using (SqlCommand cmd = new SqlCommand(sql, conn))
                     {
                         using (SqlDataReader reader = cmd.ExecuteReader())
@@ -48,19 +46,19 @@ namespace GlobalTradeSimulator.DataAccess
             }
             catch (Exception ex)
             {
-                // YE LINE DEBUGGING MEIN MADAD KAREGI
-                throw new Exception("Database Connection Error: " + ex.Message);
+                // Detailed error for debugging in terminal
+                throw new Exception("SQL Error in GetMarketPrices: " + ex.Message);
             }
             return list;
         }
     }
 
-    // Model class for Market Data (Ensure this matches your Models folder or keep it here)
+    // Model class defined here to ensure compatibility
     public class MarketResource
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public double CurrentPrice { get; set; } // SQL column ka naam yahi hai
+        public double CurrentPrice { get; set; }
         public int Supply { get; set; }
         public int Demand { get; set; }
     }
