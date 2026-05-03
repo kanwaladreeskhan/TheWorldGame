@@ -137,8 +137,11 @@ namespace GlobalTradeSimulator.Services
             {
                 return new TradeResult { Success = false, Message = "DB Error: " + ex.Message };
             }
+            
         }
+        
     }
+    
 
     public class TradeResult { public bool Success { get; set; } public string Message { get; set; } = ""; }
     public class ValidationResult { public bool IsValid { get; set; } public string ErrorMessage { get; set; } = ""; }

@@ -78,3 +78,5 @@ C:\Users\LENOVO\Documents\GitHub\TheWorldGame\obj\Debug\net8.0\refint\GlobalTrad
 C:\Users\LENOVO\Documents\GitHub\TheWorldGame\obj\Debug\net8.0\GlobalTradeSimulator.Web.pdb
 C:\Users\LENOVO\Documents\GitHub\TheWorldGame\obj\Debug\net8.0\GlobalTradeSimulator.Web.genruntimeconfig.cache
 C:\Users\LENOVO\Documents\GitHub\TheWorldGame\obj\Debug\net8.0\ref\GlobalTradeSimulator.Web.dll
+C:\Users\LENOVO\Documents\GitHub\TheWorldGame\bin\Debug\net8.0\package-lock.json
+C:\Users\LENOVO\Documents\GitHub\TheWorldGame\bin\Debug\net8.0\package.json

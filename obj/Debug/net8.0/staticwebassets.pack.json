@@ -1,6 +1,22 @@
 {
   "Files": [
     {
+      "Id": "C:\\Users\\LENOVO\\Documents\\GitHub\\TheWorldGame\\wwwroot\\assets\\explosion.png",
+      "PackagePath": "staticwebassets\\assets\\explosion.png"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\Documents\\GitHub\\TheWorldGame\\wwwroot\\assets\\flag-blue.png",
+      "PackagePath": "staticwebassets\\assets\\flag-blue.png"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\Documents\\GitHub\\TheWorldGame\\wwwroot\\assets\\flag-red.png",
+      "PackagePath": "staticwebassets\\assets\\flag-red.png"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\Documents\\GitHub\\TheWorldGame\\wwwroot\\assets\\world-map.jpg",
+      "PackagePath": "staticwebassets\\assets\\world-map.jpg"
+    },
+    {
       "Id": "C:\\Users\\LENOVO\\Documents\\GitHub\\TheWorldGame\\wwwroot\\index.html",
       "PackagePath": "staticwebassets\\index.html"
     },
@@ -11,6 +27,10 @@
     {
       "Id": "C:\\Users\\LENOVO\\Documents\\GitHub\\TheWorldGame\\wwwroot\\leaderboard.html",
       "PackagePath": "staticwebassets\\leaderboard.html"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\Documents\\GitHub\\TheWorldGame\\wwwroot\\map.js",
+      "PackagePath": "staticwebassets\\map.js"
     },
     {
       "Id": "C:\\Users\\LENOVO\\Documents\\GitHub\\TheWorldGame\\wwwroot\\market.html",

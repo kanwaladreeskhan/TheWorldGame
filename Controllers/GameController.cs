@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using GlobalTradeSimulator.Services;
 using System;
 using System.Threading.Tasks;
+using GlobalTradeSimulator.Web.Services;
+using GlobalTradeSimulator.Web.Models;
 
 namespace GlobalTradeSimulator.Web.Controllers
 {
@@ -53,6 +54,18 @@ namespace GlobalTradeSimulator.Web.Controllers
                 return StatusCode(500, new { message = "Game engine error: " + errorMsg });
             }
         }
+
+        [HttpGet("mapdata")]
+        public IActionResult GetMapData()
+       {
+           var data = new List<object>
+       {
+        new { id = 1, name = "India", x = 750, y = 320, isPlayer = true },
+        new { id = 2, name = "USA", x = 220, y = 200, isPlayer = false },
+        // load from your Players table
+        };
+         return Ok(data);
+    }
 
         [HttpGet("state")]
         public IActionResult GetGameState()

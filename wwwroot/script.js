@@ -1,4 +1,4 @@
-﻿// 1. Dynamic API URL
+﻿// 1. Dynamic API URL (only once)
 const API_URL = window.location.origin + "/api";
 
 // Core Data Management
@@ -17,6 +17,7 @@ function updateUI() {
         el.textContent = Number(val).toLocaleString();
     });
 }
+
 async function updateGameStatus() {
     try {
         const res = await fetch('/api/game/state');
@@ -25,8 +26,8 @@ async function updateGameStatus() {
         const badge = document.getElementById('gameModeBadge');
         if (state.mode === "War") {
             badge.innerText = "WAR MODE ACTIVE";
-            badge.className = "badge bg-danger animate-pulse"; // War mein red pulse effect
-            document.body.classList.add('war-theme'); // Optional: Puri screen thori red tint kar dein
+            badge.className = "badge bg-danger animate-pulse";
+            document.body.classList.add('war-theme');
         } else {
             badge.innerText = "Normal";
             badge.className = "badge bg-success";
@@ -42,7 +43,6 @@ async function refreshPlayerData() {
     const player = getCurrentPlayer();
     if (!player) return;
     try {
-        // Name-based sync as per your controller
         const res = await fetch(`${API_URL}/player/${player.Name}`);
         if (!res.ok) throw new Error("Database sync failed");
         
@@ -52,7 +52,7 @@ async function refreshPlayerData() {
     } catch (err) { console.error("Sync Error:", err); }
 }
 
-// 3. FIXED BUY/SELL LOGIC (Ye Missing Tha)
+// 3. FIXED BUY/SELL LOGIC
 async function quickTrade(resourceId, action) {
     const player = getCurrentPlayer();
     if (!player) {
@@ -61,14 +61,13 @@ async function quickTrade(resourceId, action) {
     }
 
     try {
-        // Note: Check your Controller if it expects /trade/execute or just /trade
         const res = await fetch(`${API_URL}/trade`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 PlayerId: player.PlayerId || player.Id,
                 ResourceId: resourceId,
-                Action: action, // 'BUY' or 'SELL'
+                Action: action,
                 Quantity: 1
             })
         });
@@ -77,11 +76,8 @@ async function quickTrade(resourceId, action) {
 
         if (res.ok) {
             console.log(`${action} Success:`, result);
-            // 1. Player ka balance update karein
             await refreshPlayerData();
-            // 2. Market ki supply update karein
             if (typeof loadMarket === "function") loadMarket();
-            // 3. Inventory update karein
             if (typeof loadInventory === "function") loadInventory();
         } else {
             alert("Trade Failed: " + (result.message || "Insufficient funds or stock"));
@@ -94,7 +90,6 @@ async function quickTrade(resourceId, action) {
 
 // 4. Game Engine Trigger
 async function processNextTurn() {
-    // 1. LocalStorage se current player ki ID nikalna zaroori hai
     const player = JSON.parse(localStorage.getItem('currentPlayer'));
     
     if (!player) {
@@ -105,21 +100,17 @@ async function processNextTurn() {
     try {
         console.log("Turn processing for Player ID:", player.PlayerId || player.Id);
 
-        // 2. Ye fetch call Controller ko 'TurnRequest' bhej rahi hai
         const res = await fetch('/api/game/next-turn', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 
-                // C# ke 'TurnRequest' model se match karne ke liye 'PlayerId' ka Capital P zaroori hai
                 PlayerId: player.PlayerId || player.Id 
             })
         });
 
         if (res.ok) {
             const result = await res.json();
-            alert(result.message); // "Turn X completed!" wala message dikhayega
-
-            // 3. Turn ke baad prices aur wealth badal gayi hogi, isliye UI refresh
+            alert(result.message);
             await refreshPlayerData(); 
             if (typeof loadMarket === "function") await loadMarket();
             if (typeof loadLeaderboard === "function") await loadLeaderboard();
@@ -132,6 +123,7 @@ async function processNextTurn() {
         alert("Game engine se rabta nahi ho pa raha.");
     }
 }
+
 // 5. Initial Player Loading
 async function loadPlayers() {
     const container = document.getElementById('playerSelect');
@@ -201,52 +193,3 @@ window.onload = () => {
         }
     }
 };
-// ... baqi code (loadPlayers, updateUI wagera) ...
-
-async function quickTrade(resourceId, action) {
-    console.log("Trading started:", resourceId, action);
-    const player = getCurrentPlayer();
-    
-    if (!player) {
-        alert("Pehle Nation select karein!");
-        return;
-    }
-
-    try {
-        const res = await fetch(`${API_URL}/trade`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                PlayerId: player.PlayerId || player.Id,
-                ResourceId: resourceId,
-                Action: action,
-                Quantity: 1
-            })
-        });
-
-       if (res.ok) {
-            console.log(`${action} successful. Syncing data...`);
-            
-            // 1. Pehle Backend se fresh balance aur inventory data lein
-            await refreshPlayerData(); 
-            
-            // 2. Agar Market Terminal khula hai to usay refresh karein (Supply update hogi)
-            if (typeof loadMarket === "function") loadMarket(); 
-            
-            // 3. CRITICAL: Agar Leaderboard widget page par hai to usay refresh karein
-            if (typeof loadLeaderboard === "function") {
-                await loadLeaderboard(); 
-            } else {
-                // Agar function nahi mil raha to silent refresh ya console log
-                console.log("Leaderboard function not found on this page.");
-            }
-
-            alert(action + " Successful!");
-        } else {
-            const error = await res.json();
-            alert("Error: " + (error.message || "Trade failed"));
-        }
-    } catch (err) {
-        console.error("Fetch error:", err);
-    }
-}
