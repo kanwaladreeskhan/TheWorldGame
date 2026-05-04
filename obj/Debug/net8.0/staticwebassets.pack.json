@@ -1,20 +1,56 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\LENOVO\\Documents\\GitHub\\TheWorldGame\\wwwroot\\assets\\explosion.png",
-      "PackagePath": "staticwebassets\\assets\\explosion.png"
-    },
-    {
       "Id": "C:\\Users\\LENOVO\\Documents\\GitHub\\TheWorldGame\\wwwroot\\assets\\flag-blue.png",
       "PackagePath": "staticwebassets\\assets\\flag-blue.png"
     },
     {
-      "Id": "C:\\Users\\LENOVO\\Documents\\GitHub\\TheWorldGame\\wwwroot\\assets\\flag-red.png",
-      "PackagePath": "staticwebassets\\assets\\flag-red.png"
+      "Id": "C:\\Users\\LENOVO\\Documents\\GitHub\\TheWorldGame\\wwwroot\\assets\\world-map-dark.jpg",
+      "PackagePath": "staticwebassets\\assets\\world-map-dark.jpg"
     },
     {
-      "Id": "C:\\Users\\LENOVO\\Documents\\GitHub\\TheWorldGame\\wwwroot\\assets\\world-map.jpg",
-      "PackagePath": "staticwebassets\\assets\\world-map.jpg"
+      "Id": "C:\\Users\\LENOVO\\Documents\\GitHub\\TheWorldGame\\wwwroot\\game.html",
+      "PackagePath": "staticwebassets\\game.html"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\Documents\\GitHub\\TheWorldGame\\wwwroot\\images\\ministers\\china.png",
+      "PackagePath": "staticwebassets\\images\\ministers\\china.png"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\Documents\\GitHub\\TheWorldGame\\wwwroot\\images\\ministers\\desktop.ini",
+      "PackagePath": "staticwebassets\\images\\ministers\\desktop.ini"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\Documents\\GitHub\\TheWorldGame\\wwwroot\\images\\ministers\\germany.png",
+      "PackagePath": "staticwebassets\\images\\ministers\\germany.png"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\Documents\\GitHub\\TheWorldGame\\wwwroot\\images\\ministers\\india.png",
+      "PackagePath": "staticwebassets\\images\\ministers\\india.png"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\Documents\\GitHub\\TheWorldGame\\wwwroot\\images\\ministers\\japan.png",
+      "PackagePath": "staticwebassets\\images\\ministers\\japan.png"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\Documents\\GitHub\\TheWorldGame\\wwwroot\\images\\ministers\\pakistan.png",
+      "PackagePath": "staticwebassets\\images\\ministers\\pakistan.png"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\Documents\\GitHub\\TheWorldGame\\wwwroot\\images\\ministers\\russia.png",
+      "PackagePath": "staticwebassets\\images\\ministers\\russia.png"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\Documents\\GitHub\\TheWorldGame\\wwwroot\\images\\ministers\\uae.png",
+      "PackagePath": "staticwebassets\\images\\ministers\\uae.png"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\Documents\\GitHub\\TheWorldGame\\wwwroot\\images\\ministers\\uk.png",
+      "PackagePath": "staticwebassets\\images\\ministers\\uk.png"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\Documents\\GitHub\\TheWorldGame\\wwwroot\\images\\ministers\\usa.png",
+      "PackagePath": "staticwebassets\\images\\ministers\\usa.png"
     },
     {
       "Id": "C:\\Users\\LENOVO\\Documents\\GitHub\\TheWorldGame\\wwwroot\\index.html",

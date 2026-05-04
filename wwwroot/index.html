@@ -2,203 +2,178 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The World Game | Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <title>THE WORLD GAME</title>
     <style>
-        :root {
-            --neon-blue: #00d2ff;
-            --neon-green: #39ff14;
-            --bg-dark: #05070a;
-        }
-
+        * { margin:0; padding:0; box-sizing:border-box; }
         body {
-            background: var(--bg-dark) !important;
-            background-image: 
-                linear-gradient(rgba(0, 210, 255, 0.07) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 210, 255, 0.07) 1px, transparent 1px) !important;
-            background-size: 40px 40px !important;
-            color: #f1f5f9 !important;
-            font-family: 'Segoe UI', sans-serif !important;
+            background: #05070a;
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             min-height: 100vh;
+            text-align: center;
+            overflow: hidden;
         }
-
-        .navbar {
-            background: rgba(5, 7, 10, 0.95) !important;
-            border-bottom: 2px solid var(--neon-blue) !important;
-            box-shadow: 0 0 20px rgba(0, 210, 255, 0.4) !important;
+        .grid-bg {
+            position: fixed; top:0; left:0; width:100%; height:100%;
+            background-image: 
+                linear-gradient(rgba(0,210,255,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,210,255,0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index:0;
         }
-
-        .glass-card, .card {
-            background: rgba(15, 23, 42, 0.8) !important;
-            backdrop-filter: blur(15px) !important;
-            border: 1px solid rgba(0, 210, 255, 0.3) !important;
-            box-shadow: 0 0 25px rgba(0, 0, 0, 0.5) !important;
-            border-radius: 15px !important;
-            transition: 0.3s !important;
+        .content { position: relative; z-index:1; max-width:1000px; padding:20px; }
+        h1 {
+            font-size: 2.5rem;
+            text-shadow: 0 0 20px #00d2ff, 0 0 40px #00d2ff;
+            letter-spacing:4px;
+            margin-bottom:5px;
         }
-
-        .card:hover {
-            border-color: var(--neon-blue) !important;
-            transform: translateY(-5px) !important;
-            box-shadow: 0 0 30px rgba(0, 210, 255, 0.2) !important;
+        h2 { color:#aaa; letter-spacing:2px; margin-bottom:50px; }
+        .ministers { display: flex; flex-wrap: wrap; justify-content: center; gap:25px; }
+        .card {
+            background: rgba(0,210,255,0.08);
+            border:1px solid rgba(0,210,255,0.25);
+            border-radius:12px;
+            width:150px;
+            padding:15px 10px;
+            opacity:0;
+            transform: translateY(30px);
+            transition: all 0.5s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-
-        .balance, #balance {
-            color: var(--neon-green) !important;
-            text-shadow: 0 0 12px rgba(57, 255, 20, 0.5) !important;
-            font-weight: 800 !important;
+        .card.show { opacity:1; transform: translateY(0); }
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid #00d2ff;
+            box-shadow: 0 0 15px rgba(0,210,255,0.5);
+            object-fit: cover;
+            margin-bottom: 10px;
+            background-color: #0a1a2f; /* fallback if image missing */
         }
-
-        .nav-btn {
-            background: rgba(0, 210, 255, 0.1) !important;
-            border: 1px solid var(--neon-blue) !important;
-            color: white !important;
-            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);
-            transition: 0.3s !important;
+        .flag { font-size:2.2rem; margin-bottom:8px; }
+        .name {
+            font-weight:bold;
+            font-size:1rem;
+            text-shadow:0 0 5px #00d2ff;
+            margin-top:5px;
         }
-
-        .nav-btn:hover {
-            background: var(--neon-blue) !important;
-            color: black !important;
-            box-shadow: 0 0 15px var(--neon-blue) !important;
+        .role {
+            font-size:0.7rem;
+            color:#88ccff;
+            margin-top:2px;
         }
+        .enter-btn {
+            margin-top:60px;
+            background: rgba(0,210,255,0.15);
+            border:2px solid #00d2ff;
+            color:#00d2ff;
+            font-size:1.4rem;
+            padding:12px 40px;
+            border-radius:8px;
+            cursor:pointer;
+            text-transform:uppercase;
+            letter-spacing:2px;
+            box-shadow:0 0 20px rgba(0,210,255,0.4);
+            transition:0.3s;
+            opacity:0;
+            animation: fadeUp 1s forwards;
+            animation-delay:3.5s;
+        }
+        .enter-btn:hover { background:#00d2ff; color:black; box-shadow:0 0 40px #00d2ff; }
+        @keyframes fadeUp {
+            from { opacity:0; transform:translateY(20px); }
+            to { opacity:1; transform:translateY(0); }
+        }
+        .overlay {
+            position:fixed; top:0; left:0; width:100%; height:100%;
+            background:black; opacity:0; pointer-events:none; z-index:9999;
+            transition: opacity 0.8s ease;
+        }
+        .overlay.on { opacity:1; pointer-events:all; }
     </style>
 </head>
-<body class="p-4">
-    <div class="container">
-        <!-- Selection Screen -->
-        <div id="playerSelectSection" class="text-center py-5">
-            <h1 class="display-4 mb-4 fw-bold">🌍 The World Game</h1>
-            <p class="text-muted mb-5"><b>Select your country to begin the simulation</b></p>
-            <div id="playerSelect" class="row g-3 justify-content-center"></div>
-        </div>
-
-        <!-- Main Dashboard -->
-        <div id="dashboard" class="d-none">
-            <div class="d-flex justify-content-between align-items-center mb-5">
-                <div>
-                    <h1 class="mb-0">Welcome, <span id="playerName" class="text-info"></span></h1>
-                    <p class="text-muted"><b>Strategy Lead | Global Market</b></p>
-                </div>
-                <div class="text-end">
-                    <button class="btn btn-warning fw-bold" onclick="processNextTurn()">
-                        <i class="fas fa-forward me-2"></i> Next Turn
-                    </button>
-                    <button onclick="logout()" class="btn btn-outline-danger ms-2">Exit</button>
-                </div>
-            </div>
-
-            <!-- Stats Row -->
-            <div class="row g-4 mb-5">
-                <div class="col-md-4">
-                    <div class="glass-card p-4">
-                        <p class="text-muted mb-1">Available Balance</p>
-                        <div class="stat-val">$<span id="balance">0</span></div>
-                    </div>
-                </div>
-                <div class="col-md-8">
-                    <div class="glass-card p-4 d-flex align-items-center justify-content-around">
-                        <div class="text-center">
-                            <p class="text-muted mb-1">Game Mode</p>
-                            <span id="gameModeBadge" class="badge bg-success">Normal</span>
-                        </div>
-                        <div class="text-center border-start ps-4">
-                            <p class="text-muted mb-1">Market Volatility</p>
-                            <span class="text-warning fw-bold">Medium</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Test buttons for map animations -->
-            <button onclick="testTrade()">Test Trade</button>
-            <button onclick="testWar()">Test War</button>
-
-            <!-- Phaser map container -->
-            <div id="game-container"></div>
-
-            <!-- Navigation Grid -->
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <button onclick="showMarket()" class="nav-btn btn btn-primary w-100 shadow">
-                        <i class="fas fa-chart-line fa-2x mb-3"></i>
-                        <h3>Market & Trade</h3>
-                        <p class="small mb-0">Buy/Sell resources at live prices</p>
-                    </button>
-                </div>
-                <div class="col-md-4">
-                    <button onclick="showInventory()" class="nav-btn btn btn-success w-100 shadow">
-                        <i class="fas fa-boxes fa-2x mb-3"></i>
-                        <h3>My Inventory</h3>
-                        <p class="small mb-0">Manage your country's resources</p>
-                    </button>
-                </div>
-                <div class="col-md-4">
-                    <button onclick="showLeaderboard()" class="nav-btn btn btn-warning w-100 shadow">
-                        <i class="fas fa-trophy fa-2x mb-3"></i>
-                        <h3>Global Ranking</h3>
-                        <p class="small mb-0">Compare wealth with other nations</p>
-                    </button>
-                </div>
-            </div>
-        </div>
+<body>
+    <div class="grid-bg"></div>
+    <div class="content">
+        <h1>🌍 THE WORLD GAME</h1>
+        <h2>FOREIGN MINISTERS ASSEMBLY</h2>
+        <div class="ministers" id="ministers"></div>
+        <button class="enter-btn" onclick="goToGame()">➤ ENTER THE WORLD GAME</button>
     </div>
-
-    <!-- External dependencies -->
-    <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
-    <script src="script.js"></script>
-    <!-- Map script after script.js so test functions are available -->
+    <div class="overlay" id="overlay"></div>
     <script>
-        // Temporary test functions – they call map.js functions
-       function testTrade() {
-    const ids = Object.keys(window.countries);
-    if (ids.length < 2) {
-        alert('Need at least 2 countries on the map.');
-        return;
-    }
-    // Pick two random different countries
-    const fromId = ids[Math.floor(Math.random() * ids.length)];
-    let toId = ids[Math.floor(Math.random() * ids.length)];
-    while (toId === fromId) toId = ids[Math.floor(Math.random() * ids.length)];
+        // List of countries – image files MUST be placed in "images/ministers/" folder
+        const ministers = [
+            { name: "Pakistan", image: "./images/ministers/pakistan.png" },
+            { name: "USA", image: "images/ministers/usa.png" },
+            { name: "China", image: "images/ministers/china.png" },
+            { name: "Germany", image: "images/ministers/germany.png" },
+            { name: "Japan", image: "images/ministers/japan.png" },
+            { name: "India", image: "images/ministers/india.png" },
+            { name: "UK", image: "images/ministers/uk.png" },
+            { name: "Russia", image: "images/ministers/russia.png" },
+            { name: "UAE", image: "images/ministers/uae.png" }
+        ];
 
-    // Pick a random resource
-    const resources = ['Oil', 'Gold', 'Steel', 'Food', 'Technology'];
-    const resource = resources[Math.floor(Math.random() * resources.length)];
+        const flagEmojis = {
+            "Pakistan": "🇵🇰",
+            "USA": "🇺🇸",
+            "China": "🇨🇳",
+            "Germany": "GE",
+            "Japan": "🇯🇵",
+            "India": "🇮🇳",
+            "UK": "UK",
+            "Russia": "🇷🇺",
+            "UAE": "u🇦🇪"
+        };
 
-    if (typeof window.showTradeLine === 'function') {
-        window.showTradeLine(game.scene.scenes[0], parseInt(fromId), parseInt(toId), resource);
-    }
-}
-   let lastWarCountry = null;
+        const grid = document.getElementById('ministers');
+        ministers.forEach((m, i) => {
+            const div = document.createElement('div');
+            div.className = 'card';
 
-function testWar() {
-    const ids = Object.keys(window.countries);
-    if (ids.length === 0) {
-        alert('No countries on the map yet.');
-        return;
-    }
-    
-    // If only one country exists, always pick it
-    let randomId;
-    if (ids.length === 1) {
-        randomId = ids[0];
-    } else {
-        // Pick a random country that is not the last one (if possible)
-        do {
-            randomId = ids[Math.floor(Math.random() * ids.length)];
-        } while (randomId === lastWarCountry && ids.length > 1);
-    }
+            // Create image element with fallback
+            const img = new Image();
+            img.className = 'avatar';
+            img.src = m.image;
+            img.alt = m.name + ' Minister';
+            img.onerror = function() {
+                // If image fails to load, show a generic silhouette
+                this.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Ccircle cx="50" cy="35" r="22" fill="%23888"/%3E%3Crect x="30" y="55" width="40" height="40" fill="%23333"/%3E%3Cpolygon points="50,65 45,55 55,55" fill="%23333"/%3E%3Ctext x="50" y="45" text-anchor="middle" fill="white" font-size="12" font-family="sans-serif"%3EN/A%3C/text%3E%3C/svg%3E';
+            };
 
-    lastWarCountry = randomId;
-    const country = window.countries[randomId];
-    if (typeof window.showWarExplosion === 'function') {
-        window.showWarExplosion(game.scene.scenes[0], country.x, country.y);
-    }
-}
+            const flagSpan = document.createElement('div');
+            flagSpan.className = 'flag';
+            flagSpan.textContent = flagEmojis[m.name] || '🏳️';
+
+            const nameDiv = document.createElement('div');
+            nameDiv.className = 'name';
+            nameDiv.textContent = m.name;
+
+            const roleDiv = document.createElement('div');
+            roleDiv.className = 'role';
+            roleDiv.textContent = 'Foreign Minister';
+
+            div.appendChild(img);
+            div.appendChild(flagSpan);
+            div.appendChild(nameDiv);
+            div.appendChild(roleDiv);
+
+            grid.appendChild(div);
+            setTimeout(() => div.classList.add('show'), 500 + i * 300);
+        });
+
+        function goToGame() {
+            document.getElementById('overlay').classList.add('on');
+            setTimeout(() => { window.location.href = 'game.html'; }, 800);
+        }
     </script>
-    <script src="map.js"></script>
 </body>
 </html>

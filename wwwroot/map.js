@@ -1,128 +1,185 @@
-// Global storage & scene reference
 window.countries = {};
 let mainScene = null;
+let glowGraphics = null;
+let warSignText = null;
 
-const config = {
-    type: Phaser.AUTO,
-    width: 1200,
-    height: 700,
-    parent: 'game-container',
-    backgroundColor: '#1a1a2e',
-    scene: {
-        preload: preload,
-        create: create,
-        update: update
-    }
+const MAP_DATA = [
+    { id:1, name:"Pakistan", x:750, y:320, isPlayer:true },
+    { id:2, name:"USA",     x:200, y:180 },
+    { id:3, name:"China",   x:900, y:220 },
+    { id:4, name:"Germany", x:580, y:150 },
+    { id:5, name:"Japan",   x:1000, y:260 },
+    { id:6, name:"UK",      x:500, y:130 },
+    { id:7, name:"Russia",  x:800, y:100 },
+    { id:8, name:"UAE",     x:700, y:380 }
+];
+
+window.getCountryIdByName = (name) => {
+    const c = MAP_DATA.find(c => c.name === name);
+    return c ? c.id : null;
 };
 
-const game = new Phaser.Game(config);
+function getFlagCode(n) {
+    const m = {"Pakistan":"pk","USA":"us","China":"cn","Germany":"de","Japan":"jp","India":"in","UK":"gb","Russia":"ru","UAE":"ae"};
+    return m[n]||"un";
+}
+
+window.initPhaser = function() {
+    if (window.gameInstance) return;
+    const config = {
+        type: Phaser.AUTO,
+        width: 1200, height: 500,
+        parent: 'game-container',
+        backgroundColor: '#000',
+        scene: { preload, create }
+    };
+    window.gameInstance = new Phaser.Game(config);
+};
 
 function preload() {
-    // Load images if they exist, otherwise they'll fail silently, we handle gracefully
-    this.load.image('worldMap', 'assets/world-map.jpg');
-    this.load.image('flag_player', 'assets/flag-blue.png');
-    this.load.image('flag_ai', 'assets/flag-red.png');
+    this.load.image('worldMap', 'assets/world-map-dark.jpg');
+    MAP_DATA.forEach(c => this.load.image(`flag_${c.id}`, `https://flagcdn.com/w80/${getFlagCode(c.name)}.png`));
 }
 
 function create() {
     mainScene = this;
+    window.mainScene = this;
 
-    // World map background
-    this.add.image(600, 350, 'worldMap').setScale(0.8);
+    if (this.textures.exists('worldMap')) {
+        this.add.image(600, 250, 'worldMap').setAlpha(0.85).setDepth(0);
+    } else {
+        const gfx = this.add.graphics();
+        gfx.lineStyle(1, 0x1a3a5a, 0.3);
+        for (let i=0; i<1200; i+=60) { gfx.moveTo(i,0); gfx.lineTo(i,500); }
+        for (let j=0; j<500; j+=60) { gfx.moveTo(0,j); gfx.lineTo(1200,j); }
+        gfx.strokePath();
+    }
 
-    // Fetch country positions from backend
-    fetch('/api/game/mapdata')
-        .then(res => res.json())
-        .then(data => {
-            data.forEach(c => {
-                const key = c.isPlayer ? 'flag_player' : 'flag_ai';
-                const sprite = this.add.image(c.x, c.y, key).setScale(0.15).setInteractive();
-                sprite.on('pointerover', () => console.log(c.name));
-                window.countries[c.id] = { sprite, x: c.x, y: c.y, name: c.name };
-            });
-        })
-        .catch(err => console.error('Mapdata fetch failed:', err));
+    glowGraphics = this.add.graphics().setDepth(1);
 
-    // SignalR connection for real-time events
-    const connection = new signalR.HubConnectionBuilder()
-        .withUrl("/gamehub")
-        .build();
+    warSignText = this.add.text(600, 30, '', {
+        fontSize: '28px', fontStyle:'bold', color:'#ff0000',
+        stroke:'#000', strokeThickness:5,
+        shadow:{ blur:10, color:'#ff0000', fill:true }
+    }).setOrigin(0.5).setDepth(20).setVisible(false);
 
-    connection.on("TradeOccurred", (from, to, resource) => {
-        if (!mainScene) return;
-        window.showTradeLine(mainScene, from, to, resource);
+    MAP_DATA.forEach(c => {
+        const img = this.add.image(c.x, c.y, `flag_${c.id}`).setScale(0.9).setInteractive();
+        img.setDepth(2);
+        img.on('pointerover', () => showTooltip(c));
+        img.on('pointerout', hideTooltip);
+        img.on('pointerdown', () => {
+            if (c.name !== getCurrentPlayerName()) openTradePopup(c.name);
+        });
+        window.countries[c.id] = { sprite: img, x: c.x, y: c.y, name: c.name };
     });
 
-    connection.on("WarStarted", (attacker, defender, x, y) => {
-        if (!mainScene) return;
-        window.showWarExplosion(mainScene, x, y);
-    });
-
-    connection.start().catch(err => console.error('SignalR error:', err));
-
-    // Keyboard shortcuts (T = trade, W = war)
-    this.input.keyboard.on('keydown-T', () => {
-        if (window.countries[1] && window.countries[2])
-            window.showTradeLine(this, 1, 2, "Oil");
-    });
-    this.input.keyboard.on('keydown-W', () => {
-        window.showWarExplosion(this, 220, 200);
-    });
+    updateMapGlow();
 }
 
-function update() {}
-
-// Trade line animation
-window.showTradeLine = function (scene, fromId, toId, resource) {
-    const from = window.countries[fromId];
-    const to = window.countries[toId];
-    if (!from || !to || !scene) return;
-
-    const graphics = scene.add.graphics();
-    graphics.lineStyle(2, 0xffd700, 0.8);
-    const line = new Phaser.Geom.Line(from.x, from.y, to.x, to.y);
-    graphics.strokeLineShape(line);
-
-    const dot = scene.add.circle(from.x, from.y, 5, 0xffffff);
-    scene.tweens.add({
-        targets: dot,
-        x: to.x,
-        y: to.y,
-        duration: 1500,
-        onComplete: () => {
-            dot.destroy();
-            graphics.destroy();
-        }
-    });
-
-    const midX = (from.x + to.x) / 2;
-    const midY = (from.y + to.y) / 2;
-    const label = scene.add.text(midX, midY, resource, {
-        fontSize: '14px',
-        color: '#ffd700',
-        stroke: '#000',
-        strokeThickness: 3
-    }).setOrigin(0.5);
-    scene.tweens.add({
-        targets: label,
-        alpha: 0,
-        duration: 2000,
-        delay: 500,
-        onComplete: () => label.destroy()
-    });
+window.showWarSign = (active) => {
+    if (!warSignText || !mainScene) return;
+    if (active) {
+        warSignText.setText('⚔️ OIL CRISIS ⚔️');
+        warSignText.setVisible(true);
+        mainScene.tweens.add({ targets: warSignText, scaleX:1.2, scaleY:1.2, duration:500, yoyo:true, repeat:-1 });
+    } else {
+        warSignText.setVisible(false);
+        mainScene.tweens.killTweensOf(warSignText);
+        warSignText.setScale(1);
+    }
 };
 
-// War explosion + camera shake
-window.showWarExplosion = function (scene, x, y) {
+window.animateNextTurn = () => {
+    if (!mainScene) return;
+    const ids = Object.keys(window.countries);
+    if (ids.length < 2) return;
+    for (let i=0; i<3; i++) {
+        const from = ids[Math.floor(Math.random()*ids.length)];
+        let to = ids[Math.floor(Math.random()*ids.length)];
+        while (to === from) to = ids[Math.floor(Math.random()*ids.length)];
+        setTimeout(() => window.showTradeLine(mainScene, parseInt(from), parseInt(to), ['Oil','Gold','Steel','Food','Technology'][Math.floor(Math.random()*5)]), i*300);
+    }
+    mainScene.cameras.main.shake(250, 0.03);
+};
+
+window.showTradeLine = (scene, fromId, toId, resource) => {
     if (!scene) return;
-    scene.cameras.main.shake(400, 0.04);
-    const circle = scene.add.circle(x, y, 10, 0xff0000);
+    const from = window.countries[fromId], to = window.countries[toId];
+    if (!from || !to) return;
+    const gfx = scene.add.graphics();
+    gfx.lineStyle(3, 0x00ffff, 0.9);
+    gfx.beginPath(); gfx.moveTo(from.x, from.y); gfx.lineTo(to.x, to.y);
+    gfx.strokePath();
+    const dot = scene.add.circle(from.x, from.y, 5, 0xffffff).setDepth(5);
     scene.tweens.add({
-        targets: circle,
-        scaleX: 3,
-        scaleY: 3,
-        alpha: 0,
-        duration: 600,
-        onComplete: () => circle.destroy()
+        targets: dot, x: to.x, y: to.y, duration:2000, ease:'Sine.easeInOut',
+        onUpdate: () => {
+            const trail = scene.add.circle(dot.x, dot.y, 2, 0x00ffff, 0.7);
+            scene.tweens.add({ targets: trail, alpha:0, scale:2, duration:300, onComplete:() => trail.destroy() });
+        },
+        onComplete: () => { dot.destroy(); gfx.destroy(); }
     });
+    const label = scene.add.text((from.x+to.x)/2, (from.y+to.y)/2-15, resource, {
+        fontSize:'16px', fontStyle:'bold', color:'#ffd700', stroke:'#000', strokeThickness:3
+    }).setOrigin(0.5).setDepth(10);
+    scene.tweens.add({ targets: label, alpha:0, duration:2500, onComplete:() => label.destroy() });
 };
+
+window.triggerWarExplosion = () => {
+    if (!mainScene) return;
+    const ids = Object.keys(window.countries);
+    if (ids.length === 0) return;
+    const randomId = ids[Math.floor(Math.random()*ids.length)];
+    window.showWarExplosion(mainScene, window.countries[randomId].x, window.countries[randomId].y);
+    setTimeout(() => {
+        const id2 = ids[Math.floor(Math.random()*ids.length)];
+        window.showWarExplosion(mainScene, window.countries[id2].x, window.countries[id2].y);
+    }, 500);
+};
+
+window.showWarExplosion = (scene, x, y) => {
+    if (!scene) return;
+    scene.cameras.main.shake(500, 0.05);
+    for (let i=0; i<5; i++) {
+        const ring = scene.add.circle(x, y, 10, Phaser.Display.Color.GetColor(255, 100+i*30, 0), 0.8).setDepth(10);
+        scene.tweens.add({ targets: ring, scaleX:5, scaleY:5, alpha:0, duration:600+i*100, delay:i*70, onComplete:() => ring.destroy() });
+    }
+};
+
+let tooltip = null;
+function showTooltip(c) {
+    if (!mainScene) return;
+    fetch('/api/player/leaderboard').then(r=>r.json()).then(data => {
+        const entry = data.find(d => cleanName(d.Name) === c.name);
+        const gdp = entry ? '$'+Math.floor(entry.TotalWealth).toLocaleString() : '...';
+        if (tooltip) tooltip.destroy();
+        tooltip = mainScene.add.text(c.x, c.y-70, `${c.name}\nGDP: ${gdp}`, {
+            fontSize:'13px', color:'#fff', backgroundColor:'#000', padding:{x:8,y:5}
+        }).setOrigin(0.5).setDepth(20);
+    });
+}
+function hideTooltip() { if (tooltip) { tooltip.destroy(); tooltip = null; } }
+function getCurrentPlayerName() {
+    const p = JSON.parse(localStorage.getItem('currentPlayer'));
+    return p ? cleanName(p.Name) : '';
+}
+
+async function updateMapGlow() {
+    if (!glowGraphics) return;
+    glowGraphics.clear();
+    try {
+        const res = await fetch('/api/player/leaderboard');
+        const data = await res.json();
+        const maxWealth = Math.max(...data.map(d => d.TotalWealth || 0), 1);
+        data.forEach(entry => {
+            const c = MAP_DATA.find(m => m.name === cleanName(entry.Name));
+            if (!c) return;
+            const intensity = Math.min(1, (entry.TotalWealth || 0) / maxWealth);
+            const color = Phaser.Display.Color.GetColor(Math.floor(255*(1-intensity)), Math.floor(255*intensity), 50);
+            glowGraphics.fillStyle(color, 0.25+intensity*0.3);
+            glowGraphics.fillCircle(c.x, c.y, 22+intensity*18);
+        });
+    } catch(e) {}
+}
+window.updateMapGlow = updateMapGlow;

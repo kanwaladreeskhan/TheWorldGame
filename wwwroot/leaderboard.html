@@ -2,59 +2,93 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Global Rankings</title>
+    <title>Global Rankings | The World Game</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <style>
+        .rank-1 { color: #ffd700 !important; text-shadow: 0 0 15px gold; }
+        .rank-2 { color: #c0c0c0 !important; }
+        .rank-3 { color: #cd7f32 !important; }
+        .flag-icon { width: 30px; margin-right: 10px; }
+        .current-player-row { background: rgba(0,210,255,0.15) !important; border-left: 4px solid #00d2ff; }
+    </style>
 </head>
 <body class="p-4">
     <div class="container">
-        <div class="text-center mb-5">
+        <div class="text-center mb-4">
             <a class="btn btn-sm btn-outline-info float-start rounded-pill px-3" href="index.html">← Dashboard</a>
-            <h1 class="fw-bold text-uppercase">GLOBAL POWER RANKING</h1>
+            <h1 class="fw-bold neon-text">GLOBAL POWER RANKING</h1>
             <p class="text-muted small">FINANCIAL SUPREMACY INDEX</p>
+            <button id="refreshBtn" class="btn btn-outline-warning btn-sm mt-2">🔄 Refresh Now</button>
+            <span class="ms-3 text-muted small">(auto‑refresh every 10s)</span>
         </div>
 
-        <div class="glass-card p-4">
+        <div class="cyber-card p-4">
             <table class="table table-dark align-middle mb-0">
                 <thead class="text-muted small">
                     <tr>
-                        <th style="width: 15%">RANK</th>
-                        <th style="width: 55%">NATION</th>
-                        <th class="text-end" style="width: 30%">TOTAL WEALTH</th>
+                        <th>RANK</th>
+                        <th>NATION</th>
+                        <th class="text-end">TOTAL WEALTH</th>
                     </tr>
                 </thead>
                 <tbody id="leaderboardBody">
-                    <!-- JS Injections -->
+                    <tr><td colspan="3" class="text-center py-5">Loading...</td></tr>
                 </tbody>
             </table>
         </div>
     </div>
 
-        <script>
-            async function loadLeaderboard() {
-                const res = await fetch('/api/player/leaderboard');
+    <script>
+        function cleanName(raw) {
+            let n = raw.replace(/AI$/i, '');
+            if (n === "Player1") n = "Pakistan";
+            return n;
+        }
+        function getFlagCode(country) {
+            const m = {"Pakistan":"pk","USA":"us","China":"cn","Germany":"de","Japan":"jp","India":"in","UK":"gb","Russia":"ru","UAE":"ae"};
+            return m[country] || "un";
+        }
+        function getFlagUrl(country) { return `https://flagcdn.com/w80/${getFlagCode(cleanName(country))}.png`; }
+
+        async function loadLeaderboard() {
+            const tbody = document.getElementById('leaderboardBody');
+            try {
+                // Force fresh data (avoid cache)
+                const res = await fetch('/api/player/leaderboard', {
+                    cache: 'no-store',
+                    headers: { 'Cache-Control': 'no-cache' }
+                });
+                if (!res.ok) throw new Error('HTTP ' + res.status);
                 const data = await res.json();
-                const tbody = document.getElementById('leaderboardBody');
+
+                if (!data || data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="3" class="text-center py-5 text-muted">No data available.</td></tr>';
+                    return;
+                }
+
+                const currentPlayer = JSON.parse(localStorage.getItem('currentPlayer'));
+                const currentName = currentPlayer ? cleanName(currentPlayer.Name || currentPlayer.name) : '';
 
                 tbody.innerHTML = data.map((p, index) => {
                     const rank = index + 1;
-                    let rankDisplay = "";
+                    let rankHTML = '';
+                    if (rank === 1) rankHTML = '<i class="fas fa-crown text-warning"></i> <span class="rank-1">1</span>';
+                    else if (rank === 2) rankHTML = '<i class="fas fa-medal text-secondary"></i> <span class="rank-2">2</span>';
+                    else if (rank === 3) rankHTML = '<i class="fas fa-medal" style="color:#cd7f32;"></i> <span class="rank-3">3</span>';
+                    else rankHTML = `<span class="text-muted">${rank}</span>`;
 
-                    // Fix: Yahan humne har rank ko handle kiya hai
-                    if(rank === 1) rankDisplay = `<i class="fas fa-crown text-warning"></i> <span class="text-warning">1</span>`;
-                    else if(rank === 2) rankDisplay = `<i class="fas fa-medal text-secondary"></i> <span class="text-secondary">2</span>`;
-                    else if(rank === 3) rankDisplay = `<i class="fas fa-medal" style="color: #cd7f32;"></i> <span style="color: #cd7f32;">3</span>`;
-                    else rankDisplay = `<span class="ms-2 text-muted">${rank}</span>`;
+                    const name = cleanName(p.Name || p.name || "Unknown");
+                    const isPlayer = (name === currentName);
 
                     return `
-                        <tr class="${p.IsPlayer ? 'player-highlight' : ''}">
-                            <td class="py-4 ps-3 fw-bold">${rankDisplay}</td>
+                        <tr class="${isPlayer ? 'current-player-row' : ''}">
+                            <td class="py-4 ps-3 fw-bold">${rankHTML}</td>
                             <td class="py-4">
-                                <span class="h5 mb-0 fw-bold">${p.Name || p.name}</span>
-                                <span class="badge ${p.IsPlayer ? 'badge-you' : 'badge-ai'} ms-3">
-                                    ${p.IsPlayer ? 'YOU' : 'AI UNIT'}
-                                </span>
+                                <img src="${getFlagUrl(name)}" class="flag-icon" alt="${name}">
+                                <span class="h5 mb-0 fw-bold">${name}</span>
+                                <span class="badge ${isPlayer ? 'bg-info' : 'bg-secondary'} ms-2">${isPlayer ? 'YOU' : 'AI'}</span>
                             </td>
                             <td class="text-end py-4 text-success fw-bold fs-5">
                                 $${Math.floor(p.TotalWealth || p.totalWealth || 0).toLocaleString()}
@@ -62,8 +96,19 @@
                         </tr>
                     `;
                 }).join('');
+            } catch (err) {
+                tbody.innerHTML = '<tr><td colspan="3" class="text-center text-danger py-5">Failed to load rankings. Check console.</td></tr>';
             }
-            window.onload = loadLeaderboard;
-        </script>
+        }
+
+        // Load on page ready and set interval
+        window.addEventListener('DOMContentLoaded', () => {
+            loadLeaderboard();
+            setInterval(loadLeaderboard, 10000);
+        });
+
+        // Refresh button
+        document.getElementById('refreshBtn').addEventListener('click', loadLeaderboard);
+    </script>
 </body>
 </html>
