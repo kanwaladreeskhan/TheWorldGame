@@ -14,9 +14,24 @@
             box-shadow: 0 0 20px rgba(0,210,255,0.3);
         }
         #game-container { width:100%; height:500px; border-radius:12px; overflow:hidden; margin:20px 0; border:1px solid #00d2ff; }
+
+        /* Sidebar */
+        .trade-log-container {
+            position: fixed; right: 20px; top: 150px; width: 260px;
+            max-height: 400px; overflow-y: auto;
+            background: rgba(10,20,40,0.9); border: 1px solid #00d2ff;
+            border-radius: 8px; padding: 10px; font-size: 0.8rem; z-index: 500;
+        }
+        .trade-log-entry { border-bottom: 1px solid rgba(0,210,255,0.2); padding: 4px 0; }
+        .mini-ranking {
+            margin-top: 10px; background: rgba(0,210,255,0.1);
+            border-radius: 6px; padding: 8px; font-size: 0.75rem;
+        }
+        .winner-btn { position: fixed; bottom: 20px; right: 20px; z-index: 500; }
     </style>
 </head>
 <body class="p-4">
+
     <div class="container">
         <!-- Selection Screen -->
         <div id="playerSelectSection" class="text-center py-5">
@@ -33,6 +48,7 @@
                     <p class="text-muted"><b>Strategy Lead | Global Market</b></p>
                 </div>
                 <div>
+                    <button class="btn btn-outline-info me-2" onclick="showFullRanking()">🏆 Full Ranking</button>
                     <button class="btn btn-warning fw-bold me-2" onclick="processNextTurn()">🚀 EXECUTE TURN</button>
                     <button onclick="logout()" class="btn btn-outline-danger">Exit</button>
                 </div>
@@ -79,6 +95,57 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body"><div class="row" id="trade-resource-list"></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Trade Log Sidebar -->
+    <div id="tradeLogContainer" class="trade-log-container d-none">
+        <h6 class="text-info">📋 LIVE TRADE LOG</h6>
+        <div id="tradeLogEntries"></div>
+        <div class="mini-ranking mt-3">
+            <strong>🏁 TOP 3</strong>
+            <div id="miniRanking"></div>
+        </div>
+    </div>
+
+    <!-- Winner Button -->
+    <button id="winnerBtn" class="btn btn-outline-warning winner-btn d-none" onclick="checkWinner()">🏆 Declare Winner</button>
+
+    <!-- Winner Modal -->
+    <div class="modal fade" id="winnerModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content cyber-card text-white text-center p-4">
+                <h2 class="text-warning mb-3">🏆 GLOBAL ECONOMIC LEADER</h2>
+                <div id="winnerFlag" style="font-size:5rem;"></div>
+                <div id="winnerName" class="display-4 fw-bold neon-text"></div>
+                <div id="winnerWealth" class="text-success fs-3"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Full Ranking Modal (new) -->
+    <div class="modal fade" id="fullRankingModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content cyber-card text-white">
+                <div class="modal-header border-bottom border-info">
+                    <h5 class="modal-title">🏆 GLOBAL RANKING</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="fullRankingBody"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- War Inventory Modal (new) -->
+    <div class="modal fade" id="warInventoryModal">
+        <div class="modal-dialog">
+            <div class="modal-content cyber-card text-white">
+                <div class="modal-header border-bottom border-danger">
+                    <h5 class="modal-title">⚔️ WAR INVENTORY OVERVIEW</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="warInventoryBody"></div>
             </div>
         </div>
     </div>
